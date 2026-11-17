@@ -1,171 +1,185 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# =========================================
+# ZSH - macOS Development Environment
+# =========================================
 
-# Path to your oh-my-zsh installation.
-  export ZSH=/home/gustavo/.oh-my-zsh
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="hyperzsh"
+# History
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+# Zsh
+setopt AUTO_CD
+setopt CORRECT
+setopt INTERACTIVE_COMMENTS
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+# Completion
+autoload -Uz compinit
+compinit
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+# =========================================
+# Aliases
+# =========================================
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+alias c='clear'
+alias ll='ls -lah'
+alias la='ls -A'
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+alias ..='cd ..'
+alias ...='cd ../..'
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+# Git
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gch='git checkout'
+alias gp='git push'
+alias gpl='git pull'
+alias gd='git diff'
+alias gl='git log --oneline --graph --decorate'
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+# GitHub
+alias ghpr='gh pr'
+alias ghi='gh issue'
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+# Node
+alias ni='npm install'
+alias nr='npm run'
+alias nrd='npm run dev'
+alias nrb='npm run build'
+alias nrt='npm run test'
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+# Python
+alias py='python3'
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-flow npm zsh-syntax-highlighting docker docker-compose)
+# Go
+alias gor='go run'
+alias gob='go build'
+alias got='go test'
 
-source $ZSH/oh-my-zsh.sh
+# Docker
+alias d='docker'
+alias dc='docker compose'
+alias dps='docker ps'
 
-# User configuration
+# Colima
+alias colima-start='colima start'
+alias colima-stop='colima stop'
+alias colima-status='colima status'
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# Ollama
+alias oi='ollama list'
+alias or='ollama run'
+alias op='ollama ps'
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# =========================================
+# Mise
+# =========================================
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# =========================================
+# Starship
+# =========================================
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
 
-export PATH=$PATH{}:/opt/android-studio/bin/:/home/gustavo/Android/Sdk/platform-tools/:/home/gustavo/Android/Sdk/tools/:/home/gustavo/projetos/swift/swift-4/usr/bin:/opt/consul/:/opt/caddy/:/home/gustavo/Documentos/PokeMMO:/usr/local/go/bin
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# export nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# =========================================
+# OmniRoute + codex-cli
+# =========================================
 
-# set vim as default editor
-export VISUAL=vim
-export EDITOR="$VISUAL"
+codex-auto() {
+  if ! curl -s --max-time 1 http://localhost:20128/health >/dev/null 2>&1; then
+    echo "🚀 Iniciando OmniRoute..."
+    omniroute serve --daemon
+  fi
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+  echo "⏳ Verificando OmniRoute..."
 
-# alias for git flow bugfixes
-alias gflbs="git flow bugfix start"
-alias gflbf="git flow bugfix finish"
+  for i in {1..20}; do
+    if curl -s --max-time 1 http://localhost:20128/health >/dev/null 2>&1; then
+      echo "✅ OmniRoute está pronto."
+      omniroute launch-codex --model codex-fallback-free
+      return
+    fi
 
-# tmux alias
-alias t='tmux'
-alias tn='tmux -2 new -s'
-alias ta='tmux -2 attach -t'
-alias tl='tmux ls'
-#servers
-alias redisazure="redis-cli -h search-api.redis.cache.windows.net -p 6379 -a 2iocytTushRmRloIM+YqMl5ulyoLZhlNpOAcOj9GnYg="
+    sleep 0.5
+  done
 
-#connect mongoDB  user root
-alias mc0='mongo admin --host 52.170.112.243 --username root --password vg7tRoFleSDGhFQO4o'
+  echo "❌ OmniRoute não ficou disponível."
+  return 1
+}
 
-alias crawlers='ssh icaro@13.92.117.119'
-alias okr-manager='ssh icaro@40.71.96.22'
-alias search-21='ssh icaro@52.170.24.229'
-alias search-api-gateway='ssh icaro@13.92.80.81'
-alias search-s10='ssh icaro@13.92.126.211'
-alias search-s11='ssh icaro@13.82.55.105'
-alias search-s12='ssh icaro@40.121.221.25'
-alias search-s13='ssh icaro@40.71.46.202'
-alias search-s14='ssh icaro@13.92.119.174'
-alias search-s15='ssh icaro@52.168.19.133'
-alias search-s16='ssh icaro@13.90.102.216'
-alias search-s17='ssh icaro@40.71.198.248'
-alias search-s18='ssh icaro@40.71.30.34'
-alias search-s19='ssh icaro@40.71.30.196'
-alias search-s1='ssh icaro@13.92.86.101'
-alias search-s20='ssh icaro@40.80.144.148'
-alias search-s21='ssh icaro@52.168.170.206'
-alias search-s22='ssh icaro@40.71.251.111'
-alias search-s23='ssh icaro@52.179.20.22'
-alias search-s24='ssh icaro@52.168.90.49'
-alias search-s25='ssh icaro@40.71.175.173'
-alias search-s26='ssh icaro@04.45.157.92'
-alias search-s27='ssh icaro@40.114.4.20'
-alias search-s28='ssh icaro@40.114.45.141'
-alias search-s29='ssh icaro@13.92.233.20'
-alias search-s2='ssh icaro@13.82.175.246'
-alias search-s30='ssh icaro@40.76.37.8'
-alias search-s31='ssh icaro@40.76.18.135'
-alias search-s32='ssh icaro@13.92.86.122'
-alias search-s33='ssh icaro@52.168.34.147'
-alias search-s34='ssh icaro@40.76.14.196'
-alias search-s35='ssh icaro@40.76.8.148'
-alias search-s36='ssh icaro@40.71.191.86'
-alias search-s37='ssh icaro@40.76.1.220'
-alias search-s38='ssh icaro@13.90.155.213'
-alias search-s39='ssh icaro@52.179.4.62'
-alias search-s3='ssh icaro@40.71.98.120'
-alias search-s40='ssh icaro@40.76.91.109'
-alias search-s4='ssh icaro@52.168.145.54'
-alias search-s5='ssh icaro@13.90.92.13'
-alias search-s6='ssh icaro@13.82.223.111'
-alias search-s7='ssh icaro@52.168.29.29'
-alias search-s8='ssh icaro@40.121.152.141'
-alias search-s9='ssh icaro@52.170.84.26'
+local-ai() {
+  echo "🧠 Preparando ambiente de IA local..."
 
-alias myVM1='ssh azureuser@40.121.213.249'
-alias myVM2='ssh azureuser@13.92.184.97'
-alias myVM3='ssh azureuser@40.121.55.6'
+  # 1. Colima
+  if ! colima status 2>&1 | grep -q "is running"; then
+    echo "🚀 Iniciando Colima..."
+    colima start
 
-alias dataVM='ssh azureuser@40.112.142.242'
-alias dataVMMe='ssh gustavo@40.112.142.242'
+    if [ $? -ne 0 ]; then
+      echo "❌ Falha ao iniciar o Colima."
+      return 1
+    fi
+  else
+    echo "✅ Colima já está rodando."
+  fi
 
-alias vimrc='vim ~/.vimrc'
-alias zshrc='vim ~/.zshrc'
+  # 2. Ollama
+  if ! curl -s --max-time 2 http://localhost:11434/api/tags >/dev/null 2>&1; then
+    echo "🚀 Iniciando Ollama..."
+    ollama serve >/tmp/ollama.log 2>&1 &
 
-export GOPATH=$HOME/go
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+    echo "⏳ Aguardando Ollama..."
+
+    for i in {1..20}; do
+      if curl -s --max-time 1 http://localhost:11434/api/tags >/dev/null 2>&1; then
+        break
+      fi
+      sleep 0.5
+    done
+  else
+    echo "✅ Ollama já está rodando."
+  fi
+
+  # 3. Verifica se o modelo existe
+  if ! ollama list | grep -q "devstral-32k"; then
+    echo "❌ Modelo devstral-32k não encontrado."
+    return 1
+  fi
+
+  # 4. Pré-carrega o modelo
+  echo "🔥 Carregando Devstral 32k..."
+
+  curl -s http://localhost:11434/api/generate \
+    -H 'Content-Type: application/json' \
+    -d '{
+      "model": "devstral-32k:latest",
+      "prompt": "OK",
+      "stream": false,
+      "keep_alive": "30m"
+    }' >/dev/null
+
+  echo "✅ Devstral 32k pronto."
+  ollama ps
+}
+
+# Unity CLI (if installed)
+[ -f "$HOME/.unity/env" ] && . "$HOME/.unity/env"
+
+# Local machine secrets (API keys, tokens — never committed to git)
+[ -f "$HOME/.zshrc.local" ] && . "$HOME/.zshrc.local"

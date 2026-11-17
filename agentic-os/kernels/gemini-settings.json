@@ -1,0 +1,143 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "hooks": {
+    "BeforeAgent": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '__HOME__/.orca/agent-hooks/gemini-hook.sh' ] && [ -r '__HOME__/.orca/agent-hooks/gemini-hook.sh' ] && [ -x '__HOME__/.orca/agent-hooks/gemini-hook.sh' ]; then /bin/sh '__HOME__/.orca/agent-hooks/gemini-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "AfterAgent": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '__HOME__/.orca/agent-hooks/gemini-hook.sh' ] && [ -r '__HOME__/.orca/agent-hooks/gemini-hook.sh' ] && [ -x '__HOME__/.orca/agent-hooks/gemini-hook.sh' ]; then /bin/sh '__HOME__/.orca/agent-hooks/gemini-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "matcher": "read_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'__HOME__/.local/bin/codebase-memory-mcp' hook-augment --dialect gemini",
+            "timeout": 5000
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '__HOME__/.orca/agent-hooks/gemini-hook.sh' ] && [ -r '__HOME__/.orca/agent-hooks/gemini-hook.sh' ] && [ -x '__HOME__/.orca/agent-hooks/gemini-hook.sh' ]; then /bin/sh '__HOME__/.orca/agent-hooks/gemini-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "BeforeTool": [
+      {
+        "matcher": "google_web_search|grep_search",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"process.stdout.write(JSON.stringify({hookSpecificOutput:{hookEventName:'BeforeTool',additionalContext:'Code discovery: prefer codebase-memory-mcp search_graph, trace_path, and get_code_snippet over grep or file search.'}}))\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '__HOME__/.orca/agent-hooks/gemini-hook.sh' ] && [ -r '__HOME__/.orca/agent-hooks/gemini-hook.sh' ] && [ -x '__HOME__/.orca/agent-hooks/gemini-hook.sh' ]; then /bin/sh '__HOME__/.orca/agent-hooks/gemini-hook.sh'; else { command -p cat 2>/dev/null || cat; } >/dev/null 2>&1 || :; fi",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"process.stdout.write(JSON.stringify({hookSpecificOutput:{hookEventName:'SessionStart',additionalContext:'Code discovery: prefer codebase-memory-mcp search_graph, trace_path, get_code_snippet, query_graph, and search_code; run index_repository first when needed.'}}))\"",
+            "timeout": 5000
+          }
+        ]
+      },
+      {
+        "matcher": "resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"process.stdout.write(JSON.stringify({hookSpecificOutput:{hookEventName:'SessionStart',additionalContext:'Code discovery: prefer codebase-memory-mcp search_graph, trace_path, get_code_snippet, query_graph, and search_code; run index_repository first when needed.'}}))\"",
+            "timeout": 5000
+          }
+        ]
+      },
+      {
+        "matcher": "clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"process.stdout.write(JSON.stringify({hookSpecificOutput:{hookEventName:'SessionStart',additionalContext:'Code discovery: prefer codebase-memory-mcp search_graph, trace_path, get_code_snippet, query_graph, and search_code; run index_repository first when needed.'}}))\"",
+            "timeout": 5000
+          }
+        ]
+      }
+    ]
+  },
+  "mcpServers": {
+    "codebase-memory-mcp": {
+      "command": "__HOME__/.local/bin/codebase-memory-mcp",
+      "args": []
+    },
+    "vaultbridge-yura": {
+      "command": "npx",
+      "args": [
+        "--prefix",
+        "__HOME__/AI/vaultbridge-mcp",
+        "tsx",
+        "__HOME__/AI/vaultbridge-mcp/src/index.ts"
+      ],
+      "env": {
+        "OBSIDIAN_VAULT_PATH": "__HOME__/obsidian/YURA"
+      }
+    },
+    "vaultbridge-mochis-curious-life": {
+      "command": "npx",
+      "args": [
+        "--prefix",
+        "__HOME__/AI/vaultbridge-mcp",
+        "tsx",
+        "__HOME__/AI/vaultbridge-mcp/src/index.ts"
+      ],
+      "env": {
+        "OBSIDIAN_VAULT_PATH": "__HOME__/obsidian/Mochi's Curious Life"
+      }
+    },
+    "aws-mcp": {
+      "command": "uvx",
+      "args": [
+        "mcp-proxy-for-aws@latest",
+        "https://aws-mcp.us-east-1.api.aws/mcp",
+        "--metadata",
+        "INSTALL_SOURCE=aws-cli"
+      ]
+    }
+  }
+}

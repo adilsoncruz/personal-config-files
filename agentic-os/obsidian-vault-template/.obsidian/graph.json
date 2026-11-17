@@ -1,0 +1,51 @@
+{
+  "collapse-filter": false,
+  "search": "-path:99_TEMPLATES",
+  "showTags": true,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:00_HOME OR tag:#moc",
+      "color": { "a": 1, "rgb": 11032055 }
+    },
+    {
+      "query": "path:01_PROJECTS OR tag:#project",
+      "color": { "a": 1, "rgb": 3899894 }
+    },
+    {
+      "query": "path:02_SPECS OR tag:#spec",
+      "color": { "a": 1, "rgb": 440020 }
+    },
+    {
+      "query": "path:03_DECISIONS OR tag:#adr",
+      "color": { "a": 1, "rgb": 16096779 }
+    },
+    {
+      "query": "path:04_SESSIONS OR tag:#session",
+      "color": { "a": 1, "rgb": 1096065 }
+    },
+    {
+      "query": "path:05_KNOWLEDGE OR tag:#knowledge",
+      "color": { "a": 1, "rgb": 15485081 }
+    },
+    {
+      "query": "path:06_DAILY OR tag:#daily",
+      "color": { "a": 1, "rgb": 9741240 }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": true,
+  "textFadeMultiplier": -1.5,
+  "nodeSizeMultiplier": 1.25,
+  "lineSizeMultiplier": 1.1,
+  "collapse-forces": false,
+  "centerStrength": 0.45,
+  "repelStrength": 12,
+  "linkStrength": 0.9,
+  "linkDistance": 220,
+  "scale": 1.0,
+  "close": false
+}

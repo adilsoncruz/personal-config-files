@@ -1,29 +1,53 @@
-# Personal config files
-Scripts to set up my preferable terminal shell and vim editor configuration.
+# Personal Config Files & Agentic OS (`macOS`)
 
-## Pre-requisites
-To use this scripts, you must have properly running/installed in your machine:
-  - [Vim](http://www.vim.org/)  - Text Editor;
-  - [Bundle](https://github.com/VundleVim/Vundle.vim) - Plug-in Manager for Vim;
-  - [Zsh and Oh-My-Zsh](https://github.com/robbyrussell/oh-my-zsh) - Powerful Shell and its most popular framework;
-  - [tmux](https://tmux.github.io/) - terminal multiplexer;
-  - [Nerd-fonts](https://github.com/ryanoasis/nerd-fonts) - Complete fonts and icons collection;
+Complete bootstrap repository for my macOS development environment and **Multi-Engine Agentic OS** (**AGY Gemini**, **OpenAI Codex**, **Claude Code**, **Orca**, and **Obsidian Memory**).
 
-## Getting started
-Download or clone this repository into your machine.
-To get the same result as mine, you probably should install other packages, as nvm or git-flow. But all the files are highly customizable, feel free to check their respective documentations on the Internet and adjust it regarding your style and needs. 
+---
 
-## Running the code
+## 📦 What This Installs
 
-Place the .tmux.conf, .vimrc and .zshrc files into the user directory root: ~/ .
-The .editorconfig into the ~/.vim directory. And the alias.zsh, you can place into ~/.oh-my-zsh/lib, as I'm doing.
-But once again, you can do it differently, only remember to change the filepath on .zshrc. 
+1. **Multi-Engine AI Kernels (`agentic-os/kernels/`):**
+   - `~/.gemini/GEMINI.md` & `settings.json` (Antigravity / Gemini CLI)
+   - `~/.codex/AGENTS.md` (OpenAI Codex CLI)
+   - `~/.claude/CLAUDE.md` & `settings.json` (Claude Code CLI)
+   - Shared modules: **Codebase Memory Graph**, **Obsidian Memory (`Agentic OS`)**, **Native Model Routing (`flash_lite`/`flash`/`pro`)**, **Jarvis Mode**, **ADHD Output Style**, and **Feature Interviewer**.
+2. **Skills Catalog (`agentic-os/skills/`):**
+   - 35+ bundled custom & domain skills (`obsidian-memory`, `jarvis-mode`, `orca-cli`, `computer-use`, `ai-pdf-template-importer`, full `aws-*` suite, `codebase-memory`, `feature-interviewer`, `reverse-engineer-anything`).
+   - `.skill-lock.json` auto-hydrator for 100+ additional community skills (Blender pipeline, Orca workflows).
+3. **Orca Orchestration & Hooks (`agentic-os/orca/` & `claude-hooks/`):**
+   - `~/.orca/` agent hooks, `creed.md`, scripts, and codebase-memory discovery gates.
+4. **Obsidian `Agentic OS` Vault (`~/obsidian/Agentic OS`):**
+   - Non-destructive bootstrap (`rsync --ignore-existing`) with pre-configured **7-color Graph View** (`.obsidian/graph.json`), `dataview` plugin, Maps of Content (`00_HOME.md`, `00_INBOX` to `06_DAILY`), and YAML frontmatter templates (`99_TEMPLATES/`).
+5. **Shell, Git, Mise & Homebrew (`.zshrc`, `.gitconfig`, `mise/config.toml`, `Brewfile`):**
+   - Clean Zsh setup (`mise`, `starship`, `colima`, `ollama`, `codex-auto`, `local-ai`) with secrets isolated in `~/.zshrc.local`.
+   - **Mise runtimes (`mise/config.toml`):** Go `1.27.1`, Java `21.0.2` & `graalvm-community-21.0.2`, Maven `3.10.0`, Node `26.12.1` & `20.20.2`, Python `3.14.7` & `3.12.15`, `uv`.
+   - **Homebrew Casks & Formulae (`Brewfile`):** Includes `mise`, **Insomnia** (`cask "insomnia"`), **DBX** (`cask "dbx"`), **Obsidian** (`cask "obsidian"`), Docker/Colima, AWS CLI, and Ollama.
 
-Soon I'm going to attach some screenshots of my terminal. Yes, I know it's important (:
+---
 
-Every time you update some file (.vimrc doesn't fit here, for more information about how to update it, read Vundle docs), "reload" it running the following command:
+## 🚀 Quick Install (1 Command)
 
+```bash
+git clone https://github.com/adilsoncruz/personal-config-files.git ~/projects/personal-config-files
+cd ~/projects/personal-config-files
+chmod +x install.sh
+./install.sh
 ```
-source $file_path
-```
-or just close and open the terminal again;
+
+### Optional Flags
+
+- **Install Homebrew packages, casks & CLI tools from `Brewfile`:**
+  ```bash
+  ./install.sh --brew
+  ```
+- **Offline / fast mode (skip cloning remote repositories from `.skill-lock.json`):**
+  ```bash
+  ./install.sh --skip-remote-skills
+  ```
+
+---
+
+## 🔐 Secrets & Portability
+
+- All paths in `agentic-os/` use the `__HOME__` placeholder and are dynamically expanded to `$HOME` during `./install.sh`.
+- Machine-specific API keys (e.g., `OMNIROUTE_API_KEY`) live exclusively in `~/.zshrc.local` (`chmod 600`), which is never tracked by Git.

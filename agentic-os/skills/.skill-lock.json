@@ -1,0 +1,1017 @@
+{
+  "version": 3,
+  "skills": {
+    "orchestration": {
+      "source": "stablyai/orca",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/stablyai/orca.git",
+      "skillPath": "skills/orchestration/SKILL.md",
+      "skillFolderHash": "da5b5c3f78634bbe12922e526ea227509faa9de0",
+      "installedAt": "2026-09-06T20:14:07.474Z",
+      "updatedAt": "2026-09-06T20:14:07.474Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
+      "installedAt": "2026-09-06T20:14:10.826Z",
+      "updatedAt": "2026-09-06T20:14:10.826Z"
+    },
+    "computer-use": {
+      "source": "stablyai/orca",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/stablyai/orca.git",
+      "skillPath": "skills/computer-use/SKILL.md",
+      "skillFolderHash": "f0561c41d1f709a953684aef5d5368f8c58d269f",
+      "installedAt": "2026-09-06T20:18:19.215Z",
+      "updatedAt": "2026-09-06T20:18:19.215Z"
+    },
+    "orca-cli": {
+      "source": "stablyai/orca",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/stablyai/orca.git",
+      "skillPath": "skills/orca-cli/SKILL.md",
+      "skillFolderHash": "ae1a86f92d7bf38f4dc161cc0c57e15a74f54832",
+      "installedAt": "2026-09-06T20:19:50.704Z",
+      "updatedAt": "2026-09-18T07:28:31.225Z"
+    },
+    "change-handoff": {
+      "source": "stablyai/orca-workflow-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/stablyai/orca-workflow-skills.git",
+      "skillPath": "skills/change-handoff/SKILL.md",
+      "skillFolderHash": "62bfb2998e56647f023c4ee8247f9e72eed94ee9",
+      "installedAt": "2026-10-10T00:29:13.689Z",
+      "updatedAt": "2026-10-10T00:29:13.689Z"
+    },
+    "repository-review": {
+      "source": "stablyai/orca-workflow-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/stablyai/orca-workflow-skills.git",
+      "skillPath": "skills/repository-review/SKILL.md",
+      "skillFolderHash": "65c91b90a21f5b31f98a90041581c7361e099d1c",
+      "installedAt": "2026-10-10T00:29:13.694Z",
+      "updatedAt": "2026-10-10T00:29:13.694Z"
+    },
+    "hypit": {
+      "source": "hypit-ai/hypit",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/hypit-ai/hypit.git",
+      "skillPath": "skills/hypit/SKILL.md",
+      "skillFolderHash": "b30b97252c2a58eb1641f3ef717a40d9cc4c4de0",
+      "installedAt": "2026-10-22T01:24:18.310Z",
+      "updatedAt": "2026-10-22T01:33:28.212Z"
+    },
+    "analog-found-footage-horror": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/analog-found-footage-horror/SKILL.md",
+      "skillFolderHash": "6f892e6db0003c4208ba5fdb3281d2eac6e26a32",
+      "installedAt": "2026-11-16T14:57:42.770Z",
+      "updatedAt": "2026-11-16T14:57:42.770Z"
+    },
+    "animation": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/animation/SKILL.md",
+      "skillFolderHash": "679f2b4cd6e0d576f341df8163bf0ffee045c2b8",
+      "installedAt": "2026-11-16T14:57:42.774Z",
+      "updatedAt": "2026-11-16T14:57:42.774Z"
+    },
+    "anime-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/anime-style/SKILL.md",
+      "skillFolderHash": "60bba5ba2acc37c27b9abf14bb9c9f8fc3667397",
+      "installedAt": "2026-11-16T14:57:42.774Z",
+      "updatedAt": "2026-11-16T14:57:42.774Z"
+    },
+    "apocalypse-worlds": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/apocalypse-worlds/SKILL.md",
+      "skillFolderHash": "1bf1d66b5a7db28dac1d887ae1c4cb50f26ef656",
+      "installedAt": "2026-11-16T14:57:42.775Z",
+      "updatedAt": "2026-11-16T14:57:42.775Z"
+    },
+    "archviz": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/archviz/SKILL.md",
+      "skillFolderHash": "8c13c40153db0f770444d5aa36c36e1ac92c7a2e",
+      "installedAt": "2026-11-16T14:57:42.775Z",
+      "updatedAt": "2026-11-16T14:57:42.775Z"
+    },
+    "asset-optimization": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/asset-optimization/SKILL.md",
+      "skillFolderHash": "32f7ef8590b988441a6e17658d7bb66dc65b28a6",
+      "installedAt": "2026-11-16T14:57:42.776Z",
+      "updatedAt": "2026-11-16T14:57:42.776Z"
+    },
+    "biome-worlds": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/biome-worlds/SKILL.md",
+      "skillFolderHash": "0e4a0215002f7633cbf33cd96d3deb0b088a70b1",
+      "installedAt": "2026-11-16T14:57:42.776Z",
+      "updatedAt": "2026-11-16T14:57:42.776Z"
+    },
+    "blender-modeler": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/blender-modeler/SKILL.md",
+      "skillFolderHash": "69108bf2086f7ce2bc176398dc484c6af46a38b7",
+      "installedAt": "2026-11-16T14:57:42.777Z",
+      "updatedAt": "2026-11-16T14:57:42.777Z"
+    },
+    "body-horror-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/body-horror-style/SKILL.md",
+      "skillFolderHash": "77e98688441a430b3f4eb2586167867d60f9ae5b",
+      "installedAt": "2026-11-16T14:57:42.777Z",
+      "updatedAt": "2026-11-16T14:57:42.777Z"
+    },
+    "brutalist-mood": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/brutalist-mood/SKILL.md",
+      "skillFolderHash": "40923f191f9a9065edf7efe23a353a4e04b67177",
+      "installedAt": "2026-11-16T14:57:42.778Z",
+      "updatedAt": "2026-11-16T14:57:42.778Z"
+    },
+    "camera-cinematography": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/camera-cinematography/SKILL.md",
+      "skillFolderHash": "3b62beb849a4d061d5ed2b3d4b83b3eca76bf27a",
+      "installedAt": "2026-11-16T14:57:42.779Z",
+      "updatedAt": "2026-11-16T14:57:42.779Z"
+    },
+    "cartoon-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/cartoon-style/SKILL.md",
+      "skillFolderHash": "11436e0c67e6fa3296fd6932efe075268d66d412",
+      "installedAt": "2026-11-16T14:57:42.779Z",
+      "updatedAt": "2026-11-16T14:57:42.779Z"
+    },
+    "character-archetypes": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/character-archetypes/SKILL.md",
+      "skillFolderHash": "f8f4cf2a6d99979aee1003a70fed9c8725d84466",
+      "installedAt": "2026-11-16T14:57:42.780Z",
+      "updatedAt": "2026-11-16T14:57:42.780Z"
+    },
+    "character-artist": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/character-artist/SKILL.md",
+      "skillFolderHash": "0055ebf133bc9a78e2ff7590da943daf763bc824",
+      "installedAt": "2026-11-16T14:57:42.780Z",
+      "updatedAt": "2026-11-16T14:57:42.780Z"
+    },
+    "chibi-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/chibi-style/SKILL.md",
+      "skillFolderHash": "85773b81ac44499600cd3b05c7cc17b4af481ce2",
+      "installedAt": "2026-11-16T14:57:42.780Z",
+      "updatedAt": "2026-11-16T14:57:42.780Z"
+    },
+    "cloth-sim": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/cloth-sim/SKILL.md",
+      "skillFolderHash": "0cd48828a2f2bbe352bcb5308e84c2573e7dd2b7",
+      "installedAt": "2026-11-16T14:57:42.781Z",
+      "updatedAt": "2026-11-16T14:57:42.781Z"
+    },
+    "collision-proxy": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/collision-proxy/SKILL.md",
+      "skillFolderHash": "40dff092263696fb24bec3b16257edee4c3baafd",
+      "installedAt": "2026-11-16T14:57:42.781Z",
+      "updatedAt": "2026-11-16T14:57:42.781Z"
+    },
+    "comic-book-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/comic-book-style/SKILL.md",
+      "skillFolderHash": "c10360a52eef1ccb702504df3b21f0f63bd739df",
+      "installedAt": "2026-11-16T14:57:42.782Z",
+      "updatedAt": "2026-11-16T14:57:42.782Z"
+    },
+    "compositing": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/compositing/SKILL.md",
+      "skillFolderHash": "c6bbb6cfa62e198f777b785b0e234c5ba841468c",
+      "installedAt": "2026-11-16T14:57:42.782Z",
+      "updatedAt": "2026-11-16T14:57:42.782Z"
+    },
+    "cosmic-eldritch-horror": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/cosmic-eldritch-horror/SKILL.md",
+      "skillFolderHash": "95b4327b8c077f348ce411062e8641c6da3da906",
+      "installedAt": "2026-11-16T14:57:42.782Z",
+      "updatedAt": "2026-11-16T14:57:42.782Z"
+    },
+    "cozy-wholesome-mood": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/cozy-wholesome-mood/SKILL.md",
+      "skillFolderHash": "ae1f4981751b5187c1ff6f45deac01cad08a3bb2",
+      "installedAt": "2026-11-16T14:57:42.783Z",
+      "updatedAt": "2026-11-16T14:57:42.783Z"
+    },
+    "creature-artist": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/creature-artist/SKILL.md",
+      "skillFolderHash": "48dce1533eb494bc2b8467d1932ded649f18813e",
+      "installedAt": "2026-11-16T14:57:42.783Z",
+      "updatedAt": "2026-11-16T14:57:42.783Z"
+    },
+    "dark-gritty-mood": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/dark-gritty-mood/SKILL.md",
+      "skillFolderHash": "71316a0d6a8087f0da5c095964e162caeb2b1133",
+      "installedAt": "2026-11-16T14:57:42.784Z",
+      "updatedAt": "2026-11-16T14:57:42.784Z"
+    },
+    "dream-surreal-mood": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/dream-surreal-mood/SKILL.md",
+      "skillFolderHash": "afd22b679ab68ede7a88ff6d0acdf93bc7166f1f",
+      "installedAt": "2026-11-16T14:57:42.785Z",
+      "updatedAt": "2026-11-16T14:57:42.785Z"
+    },
+    "dream-weirdcore-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/dream-weirdcore-style/SKILL.md",
+      "skillFolderHash": "e20a65f49df6e86fb29e95d643b11efbb1ddd91b",
+      "installedAt": "2026-11-16T14:57:42.785Z",
+      "updatedAt": "2026-11-16T14:57:42.785Z"
+    },
+    "environment-artist": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/environment-artist/SKILL.md",
+      "skillFolderHash": "e32d612f78f2cfc62fcb3be4cc60b755f754bf4d",
+      "installedAt": "2026-11-16T14:57:42.786Z",
+      "updatedAt": "2026-11-16T14:57:42.786Z"
+    },
+    "export-pipeline": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/export-pipeline/SKILL.md",
+      "skillFolderHash": "5b394b255a67ccd0115ad342644d95d58a37c238",
+      "installedAt": "2026-11-16T14:57:42.787Z",
+      "updatedAt": "2026-11-16T14:57:42.787Z"
+    },
+    "fantasy-worlds": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/fantasy-worlds/SKILL.md",
+      "skillFolderHash": "d5d2fd296c8f7a76475f4de501ef47405636c913",
+      "installedAt": "2026-11-16T14:57:42.787Z",
+      "updatedAt": "2026-11-16T14:57:42.787Z"
+    },
+    "folk-horror-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/folk-horror-style/SKILL.md",
+      "skillFolderHash": "8f96e82e4423913e8bb3748a13d20e994da352ed",
+      "installedAt": "2026-11-16T14:57:42.788Z",
+      "updatedAt": "2026-11-16T14:57:42.788Z"
+    },
+    "frutiger-aero-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/frutiger-aero-style/SKILL.md",
+      "skillFolderHash": "9b68802db0da40e2c93eaad5f92cb2ac37cda8fa",
+      "installedAt": "2026-11-16T14:57:42.788Z",
+      "updatedAt": "2026-11-16T14:57:42.788Z"
+    },
+    "genre-action-combat": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-action-combat/SKILL.md",
+      "skillFolderHash": "1092be29e7e673ef3aacd20c76e353c4718d7625",
+      "installedAt": "2026-11-16T14:57:42.789Z",
+      "updatedAt": "2026-11-16T14:57:42.789Z"
+    },
+    "genre-card-party-idle": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-card-party-idle/SKILL.md",
+      "skillFolderHash": "4b054362d8b51fea750d2f595344868c3a7ed5e6",
+      "installedAt": "2026-11-16T14:57:42.789Z",
+      "updatedAt": "2026-11-16T14:57:42.789Z"
+    },
+    "genre-metroidvania-roguelike": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-metroidvania-roguelike/SKILL.md",
+      "skillFolderHash": "87ef22431820a2322414df6f2623fb3196403bf5",
+      "installedAt": "2026-11-16T14:57:42.790Z",
+      "updatedAt": "2026-11-16T14:57:42.790Z"
+    },
+    "genre-narrative-vn": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-narrative-vn/SKILL.md",
+      "skillFolderHash": "9c73d77a71bd8eafa9e03df86e14228acdff5b1b",
+      "installedAt": "2026-11-16T14:57:42.790Z",
+      "updatedAt": "2026-11-16T14:57:42.790Z"
+    },
+    "genre-open-world-sandbox": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-open-world-sandbox/SKILL.md",
+      "skillFolderHash": "69f281287413ae9347ebb9059394cf0f4a7d724c",
+      "installedAt": "2026-11-16T14:57:42.790Z",
+      "updatedAt": "2026-11-16T14:57:42.790Z"
+    },
+    "genre-puzzle-platformer": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-puzzle-platformer/SKILL.md",
+      "skillFolderHash": "7ff94381130c704bfbea62b89c9d919da7fe96ff",
+      "installedAt": "2026-11-16T14:57:42.791Z",
+      "updatedAt": "2026-11-16T14:57:42.791Z"
+    },
+    "genre-racing-sports": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-racing-sports/SKILL.md",
+      "skillFolderHash": "fe53b5b443101e23667372cedad791bf7ff867f1",
+      "installedAt": "2026-11-16T14:57:42.791Z",
+      "updatedAt": "2026-11-16T14:57:42.791Z"
+    },
+    "genre-rpg": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-rpg/SKILL.md",
+      "skillFolderHash": "dd58ab26f1a2f7a285d986714dfefc26674bc351",
+      "installedAt": "2026-11-16T14:57:42.791Z",
+      "updatedAt": "2026-11-16T14:57:42.791Z"
+    },
+    "genre-shooter": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-shooter/SKILL.md",
+      "skillFolderHash": "2b483420875c0518b2087dffea3d25cd8266093e",
+      "installedAt": "2026-11-16T14:57:42.792Z",
+      "updatedAt": "2026-11-16T14:57:42.792Z"
+    },
+    "genre-soulslike": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-soulslike/SKILL.md",
+      "skillFolderHash": "de1307c313e6aff03b6aa31c00d2be6a280ed3f9",
+      "installedAt": "2026-11-16T14:57:42.792Z",
+      "updatedAt": "2026-11-16T14:57:42.792Z"
+    },
+    "genre-stealth": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-stealth/SKILL.md",
+      "skillFolderHash": "9fca10cc635fdcc5fe6cb9f0fe65476b792a9ab8",
+      "installedAt": "2026-11-16T14:57:42.792Z",
+      "updatedAt": "2026-11-16T14:57:42.792Z"
+    },
+    "genre-strategy-sim": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-strategy-sim/SKILL.md",
+      "skillFolderHash": "ae993479d5883a79e5b3af457502220a1b0e1893",
+      "installedAt": "2026-11-16T14:57:42.793Z",
+      "updatedAt": "2026-11-16T14:57:42.793Z"
+    },
+    "genre-survival": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/genre-survival/SKILL.md",
+      "skillFolderHash": "d9eecb14b27e4b0865e6bdab36947cfdb862cb72",
+      "installedAt": "2026-11-16T14:57:42.793Z",
+      "updatedAt": "2026-11-16T14:57:42.793Z"
+    },
+    "geometry-nodes": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/geometry-nodes/SKILL.md",
+      "skillFolderHash": "aba6e7644f3fa3b6efd357bc2a26c340d9b58bde",
+      "installedAt": "2026-11-16T14:57:42.793Z",
+      "updatedAt": "2026-11-16T14:57:42.793Z"
+    },
+    "godot-export": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/godot-export/SKILL.md",
+      "skillFolderHash": "8b7c72b3ca18f827c0603d7dabfbb5b810a945e3",
+      "installedAt": "2026-11-16T14:57:42.794Z",
+      "updatedAt": "2026-11-16T14:57:42.794Z"
+    },
+    "hair-groom": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/hair-groom/SKILL.md",
+      "skillFolderHash": "4d7651c5f77f3bbc49b8902efe3bd6afbea3e2b4",
+      "installedAt": "2026-11-16T14:57:42.794Z",
+      "updatedAt": "2026-11-16T14:57:42.794Z"
+    },
+    "hand-painted-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/hand-painted-style/SKILL.md",
+      "skillFolderHash": "4dcb68da8e980ba919e9fde3bde5cb2f1c069cf4",
+      "installedAt": "2026-11-16T14:57:42.795Z",
+      "updatedAt": "2026-11-16T14:57:42.795Z"
+    },
+    "hard-surface": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/hard-surface/SKILL.md",
+      "skillFolderHash": "e3e2e30ffc2c0e69d4138189423ddadc79fe4ff8",
+      "installedAt": "2026-11-16T14:57:42.795Z",
+      "updatedAt": "2026-11-16T14:57:42.795Z"
+    },
+    "hd-2d-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/hd-2d-style/SKILL.md",
+      "skillFolderHash": "de301417d84ced0a19fcaf6771b6bbd16d93d6c9",
+      "installedAt": "2026-11-16T14:57:42.796Z",
+      "updatedAt": "2026-11-16T14:57:42.796Z"
+    },
+    "historical-worlds": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/historical-worlds/SKILL.md",
+      "skillFolderHash": "23e5aad5ba7da0ef3933955a8df6e5d8a43a9e8b",
+      "installedAt": "2026-11-16T14:57:42.796Z",
+      "updatedAt": "2026-11-16T14:57:42.796Z"
+    },
+    "horror-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/horror-style/SKILL.md",
+      "skillFolderHash": "948fff7e11d436acc9da286710b1a550d1445260",
+      "installedAt": "2026-11-16T14:57:42.797Z",
+      "updatedAt": "2026-11-16T14:57:42.797Z"
+    },
+    "indie-horror-aesthetics": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/indie-horror-aesthetics/SKILL.md",
+      "skillFolderHash": "8fdf56bbc9f84aa5724652db43db16b032e91b74",
+      "installedAt": "2026-11-16T14:57:42.798Z",
+      "updatedAt": "2026-11-16T14:57:42.798Z"
+    },
+    "isometric-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/isometric-style/SKILL.md",
+      "skillFolderHash": "ecadc229d92522c315dc14440390fb22d77d7db1",
+      "installedAt": "2026-11-16T14:57:42.799Z",
+      "updatedAt": "2026-11-16T14:57:42.799Z"
+    },
+    "lighting": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/lighting/SKILL.md",
+      "skillFolderHash": "a7d358c371baa40452d14d227a238189d180be76",
+      "installedAt": "2026-11-16T14:57:42.799Z",
+      "updatedAt": "2026-11-16T14:57:42.799Z"
+    },
+    "liminal-space-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/liminal-space-style/SKILL.md",
+      "skillFolderHash": "2373584942b207bb438f86c7406e1c80964e1dbf",
+      "installedAt": "2026-11-16T14:57:42.801Z",
+      "updatedAt": "2026-11-16T14:57:42.801Z"
+    },
+    "lod-pipeline": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/lod-pipeline/SKILL.md",
+      "skillFolderHash": "04875e0b9e2a9953cdd4014a50ed6b017319456d",
+      "installedAt": "2026-11-16T14:57:42.802Z",
+      "updatedAt": "2026-11-16T14:57:42.802Z"
+    },
+    "lookdev": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/lookdev/SKILL.md",
+      "skillFolderHash": "ac4eaef020d34a2415763f5e99e157b35723376b",
+      "installedAt": "2026-11-16T14:57:42.802Z",
+      "updatedAt": "2026-11-16T14:57:42.802Z"
+    },
+    "lowpoly-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/lowpoly-style/SKILL.md",
+      "skillFolderHash": "ef207918a8f4dd805bdab1fba332d994583be2bb",
+      "installedAt": "2026-11-16T14:57:42.803Z",
+      "updatedAt": "2026-11-16T14:57:42.803Z"
+    },
+    "manga-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/manga-style/SKILL.md",
+      "skillFolderHash": "9feab2ca8ad067d13220f85b0d8a606e4ab05264",
+      "installedAt": "2026-11-16T14:57:42.803Z",
+      "updatedAt": "2026-11-16T14:57:42.803Z"
+    },
+    "mascot-puppet-horror": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/mascot-puppet-horror/SKILL.md",
+      "skillFolderHash": "fb934252976624287837c0ba38c7c878cb0f32ba",
+      "installedAt": "2026-11-16T14:57:42.804Z",
+      "updatedAt": "2026-11-16T14:57:42.804Z"
+    },
+    "materials": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/materials/SKILL.md",
+      "skillFolderHash": "c765c9cfd46d2e139fed3b4cf988b0086d630e0c",
+      "installedAt": "2026-11-16T14:57:42.804Z",
+      "updatedAt": "2026-11-16T14:57:42.804Z"
+    },
+    "minimalist-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/minimalist-style/SKILL.md",
+      "skillFolderHash": "1c96ad2fb74d6e674b40aa4ebc9b4b23faf9d5b8",
+      "installedAt": "2026-11-16T14:57:42.804Z",
+      "updatedAt": "2026-11-16T14:57:42.804Z"
+    },
+    "neon-retrofuturism": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/neon-retrofuturism/SKILL.md",
+      "skillFolderHash": "42b160bc364f32f1dfefe6fe74aad647af638505",
+      "installedAt": "2026-11-16T14:57:42.805Z",
+      "updatedAt": "2026-11-16T14:57:42.805Z"
+    },
+    "noir-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/noir-style/SKILL.md",
+      "skillFolderHash": "f46507be52cf1452e72c7f9eadcd54da63955b6e",
+      "installedAt": "2026-11-16T14:57:42.805Z",
+      "updatedAt": "2026-11-16T14:57:42.805Z"
+    },
+    "painterly-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/painterly-style/SKILL.md",
+      "skillFolderHash": "c1033084913e874f84d26a5c74777bac1a0f22fd",
+      "installedAt": "2026-11-16T14:57:42.805Z",
+      "updatedAt": "2026-11-16T14:57:42.805Z"
+    },
+    "physics-sim": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/physics-sim/SKILL.md",
+      "skillFolderHash": "d3c26b1a8f9bdeffaaaed74968d9d4ed4e6fd063",
+      "installedAt": "2026-11-16T14:57:42.806Z",
+      "updatedAt": "2026-11-16T14:57:42.806Z"
+    },
+    "pixel-art-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/pixel-art-style/SKILL.md",
+      "skillFolderHash": "958502e994ae6baef64f273ad481cd5fa8caf320",
+      "installedAt": "2026-11-16T14:57:42.806Z",
+      "updatedAt": "2026-11-16T14:57:42.806Z"
+    },
+    "procedural-modeling": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/procedural-modeling/SKILL.md",
+      "skillFolderHash": "2e7a1e62b63b0a610959b8a1788d535d2fd6a27e",
+      "installedAt": "2026-11-16T14:57:42.807Z",
+      "updatedAt": "2026-11-16T14:57:42.807Z"
+    },
+    "prop-artist": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/prop-artist/SKILL.md",
+      "skillFolderHash": "159f8032f3253683a27e0857a773f5e4c0e0f50d",
+      "installedAt": "2026-11-16T14:57:42.807Z",
+      "updatedAt": "2026-11-16T14:57:42.807Z"
+    },
+    "psx-horror-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/psx-horror-style/SKILL.md",
+      "skillFolderHash": "cd55c398a6e9ddc2ac29bce9e3b2be850b961ae0",
+      "installedAt": "2026-11-16T14:57:42.807Z",
+      "updatedAt": "2026-11-16T14:57:42.807Z"
+    },
+    "qa-review": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/qa-review/SKILL.md",
+      "skillFolderHash": "3d389554cd6588fdfe40bc748f45587d25e4878a",
+      "installedAt": "2026-11-16T14:57:42.808Z",
+      "updatedAt": "2026-11-16T14:57:42.808Z"
+    },
+    "realistic-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/realistic-style/SKILL.md",
+      "skillFolderHash": "3b05ba63468affec58c694fd0da2d611812c18e1",
+      "installedAt": "2026-11-16T14:57:42.808Z",
+      "updatedAt": "2026-11-16T14:57:42.808Z"
+    },
+    "rendering": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/rendering/SKILL.md",
+      "skillFolderHash": "7cce7ee00a9452fcf4155dfddef78377f5ca9b2a",
+      "installedAt": "2026-11-16T14:57:42.809Z",
+      "updatedAt": "2026-11-16T14:57:42.809Z"
+    },
+    "retopology": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/retopology/SKILL.md",
+      "skillFolderHash": "b168986759ba452df40c191ea9465aad0514fcab",
+      "installedAt": "2026-11-16T14:57:42.809Z",
+      "updatedAt": "2026-11-16T14:57:42.809Z"
+    },
+    "retro-16bit-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/retro-16bit-style/SKILL.md",
+      "skillFolderHash": "f51991e2098b8516e5523e0593bc44176986e4c0",
+      "installedAt": "2026-11-16T14:57:42.809Z",
+      "updatedAt": "2026-11-16T14:57:42.809Z"
+    },
+    "retro-8bit-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/retro-8bit-style/SKILL.md",
+      "skillFolderHash": "173744909fdec8e38bc41b37c12e2e5d2253528b",
+      "installedAt": "2026-11-16T14:57:42.810Z",
+      "updatedAt": "2026-11-16T14:57:42.810Z"
+    },
+    "rigging": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/rigging/SKILL.md",
+      "skillFolderHash": "87327d3fd3116df5104ce8cf2f46b311f1da0a24",
+      "installedAt": "2026-11-16T14:57:42.810Z",
+      "updatedAt": "2026-11-16T14:57:42.810Z"
+    },
+    "scene-assembly": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/scene-assembly/SKILL.md",
+      "skillFolderHash": "67dc5326df5d6c2ffd8a0d486fb52385ff7fedba",
+      "installedAt": "2026-11-16T14:57:42.811Z",
+      "updatedAt": "2026-11-16T14:57:42.811Z"
+    },
+    "sci-fi-punk-worlds": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/sci-fi-punk-worlds/SKILL.md",
+      "skillFolderHash": "58acb1bcb428ff52e904be3ffcd1e404cf1d632d",
+      "installedAt": "2026-11-16T14:57:42.811Z",
+      "updatedAt": "2026-11-16T14:57:42.811Z"
+    },
+    "sculpting": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/sculpting/SKILL.md",
+      "skillFolderHash": "608f435062749bdd5e9ac60ea9750f88408bd65c",
+      "installedAt": "2026-11-16T14:57:42.811Z",
+      "updatedAt": "2026-11-16T14:57:42.811Z"
+    },
+    "set-dressing": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/set-dressing/SKILL.md",
+      "skillFolderHash": "7e1470b9bbc60fbbb4bc3d8615e3fdb7d477a44b",
+      "installedAt": "2026-11-16T14:57:42.812Z",
+      "updatedAt": "2026-11-16T14:57:42.812Z"
+    },
+    "stop-motion-craft-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/stop-motion-craft-style/SKILL.md",
+      "skillFolderHash": "6f18b502a7aa9841fc7c040bda66a4cd75536c45",
+      "installedAt": "2026-11-16T14:57:42.812Z",
+      "updatedAt": "2026-11-16T14:57:42.812Z"
+    },
+    "stylized-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/stylized-style/SKILL.md",
+      "skillFolderHash": "d0e45876011dd0946e56773a33db547e617edf74",
+      "installedAt": "2026-11-16T14:57:42.812Z",
+      "updatedAt": "2026-11-16T14:57:42.812Z"
+    },
+    "texture-workflow": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/texture-workflow/SKILL.md",
+      "skillFolderHash": "ae201df2733560a26a709f2f73e8bb9e59385313",
+      "installedAt": "2026-11-16T14:57:42.813Z",
+      "updatedAt": "2026-11-16T14:57:42.813Z"
+    },
+    "unity-export": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/unity-export/SKILL.md",
+      "skillFolderHash": "94bab39306228c90615336283f960d216f6f0578",
+      "installedAt": "2026-11-16T14:57:42.813Z",
+      "updatedAt": "2026-11-16T14:57:42.813Z"
+    },
+    "unreal-export": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/unreal-export/SKILL.md",
+      "skillFolderHash": "880dfd21bc58a9cd840ec344b2b74362bc291b1d",
+      "installedAt": "2026-11-16T14:57:42.814Z",
+      "updatedAt": "2026-11-16T14:57:42.814Z"
+    },
+    "uv-workflow": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/uv-workflow/SKILL.md",
+      "skillFolderHash": "680474b1be5ba52c65be838443d0a4aed70c6dd4",
+      "installedAt": "2026-11-16T14:57:42.814Z",
+      "updatedAt": "2026-11-16T14:57:42.814Z"
+    },
+    "vector-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/vector-style/SKILL.md",
+      "skillFolderHash": "3e5791f0e2a951f075fbe4f1f78303f325b49de0",
+      "installedAt": "2026-11-16T14:57:42.814Z",
+      "updatedAt": "2026-11-16T14:57:42.814Z"
+    },
+    "vegetation-artist": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/vegetation-artist/SKILL.md",
+      "skillFolderHash": "9c63177e7d888b9e84c5d1c221eb9824aeb78b14",
+      "installedAt": "2026-11-16T14:57:42.815Z",
+      "updatedAt": "2026-11-16T14:57:42.815Z"
+    },
+    "vehicle-artist": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/vehicle-artist/SKILL.md",
+      "skillFolderHash": "f55d89e4b7e2c2a31ed27c132af3aa740d3ab7c9",
+      "installedAt": "2026-11-16T14:57:42.815Z",
+      "updatedAt": "2026-11-16T14:57:42.815Z"
+    },
+    "vfx-fx": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/vfx-fx/SKILL.md",
+      "skillFolderHash": "15ab5ee5e6d588e3a530fc3931369b57e4ecbbb1",
+      "installedAt": "2026-11-16T14:57:42.816Z",
+      "updatedAt": "2026-11-16T14:57:42.816Z"
+    },
+    "visual-console-eras": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/visual-console-eras/SKILL.md",
+      "skillFolderHash": "40a7d9fcf95641af5073c400d9ba5bc4bf90d56e",
+      "installedAt": "2026-11-16T14:57:42.816Z",
+      "updatedAt": "2026-11-16T14:57:42.816Z"
+    },
+    "voxel-style": {
+      "source": "arjun988/blender-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/arjun988/blender-skills.git",
+      "commit": "904f095d8f36a6e72adaebb08d07f884a074743d",
+      "skillPath": ".claude/skills/voxel-style/SKILL.md",
+      "skillFolderHash": "540e99aaecb64961b5624b6da1137deecb8e4340",
+      "installedAt": "2026-11-16T14:57:42.816Z",
+      "updatedAt": "2026-11-16T14:57:42.816Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "cline",
+    "codex",
+    "cursor",
+    "droid",
+    "fx",
+    "gemini-cli",
+    "github-copilot",
+    "kilo",
+    "kimi-code-cli",
+    "opencode",
+    "pi",
+    "warp",
+    "zed"
+  ]
+}
