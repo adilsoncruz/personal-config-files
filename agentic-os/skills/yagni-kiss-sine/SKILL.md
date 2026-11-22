@@ -1,9 +1,9 @@
 ---
 name: yagni-kiss-sine
-description: Enforces YAGNI (You Aren't Gonna Need It), KISS (Keep It Simple, Stupid), SINE (Simplicity Is Not Easy / Simple Is Nearly Everything), and Pragmatic Object Calisthenics during feature planning, coding, refactoring, and code reviews. Activates whenever designing architecture, implementing features, reviewing PRs, or evaluating abstractions.
+description: Enforces YAGNI (You Aren't Gonna Need It), KISS (Keep It Simple, Stupid), SINE (Simplicity Is Not Easy / Simple Is Nearly Everything), Pragmatic Object Calisthenics, and Pragmatic SOLID (SRP at boundaries and true LSP) during feature planning, coding, refactoring, and code reviews. Activates whenever designing architecture, implementing features, reviewing PRs, or evaluating abstractions.
 ---
 
-# YAGNI + KISS + SINE + Pragmatic Object Calisthenics
+# YAGNI + KISS + SINE + Pragmatic Calisthenics & SOLID
 
 Apply these principles on every plan, implementation, refactor, and code review. Silence over-engineering by default; pause and warn the user whenever a request introduces speculative complexity.
 
@@ -41,6 +41,10 @@ Apply the subset of Object Calisthenics that improves readability without trigge
 4. **Law of Demeter (One Dot Per Line):** Avoid train wrecks (`order.getCustomer().getAddress().getZip()`), except for standard fluent APIs/collections (`.filter().map()`).
 5. **Value Objects Only When Logic Exists:** Wrap primitives (`Money`, `CPF`, `Email`) **only** when they carry validation, invariants, or formatting logic—never wrap plain primitives or collections "just because" (YAGNI wins over dogmatism).
 
+## 5. Pragmatic SOLID (The 2 Rules That Matter)
+1. **SRP at Boundaries (Single Reason to Change):** Separate I/O, database access, and transport (HTTP/gRPC) from pure domain calculations; never mix SQL queries or HTTP response serialization into core business logic. Keep cohesive domain logic in the same unit until real change patterns force a split.
+2. **True LSP (Liskov Substitution):** Subtypes and interface implementations must honor the complete contract. Never inherit or implement just to throw `NotImplementedError`, `UnsupportedOperationException`, or leave empty stub methods. If a method does not apply, use composition instead of inheritance/broad interfaces.
+
 ---
 
 ## Mandatory Workflow
@@ -58,3 +62,4 @@ When reviewing code or a diff, flag violations categorized as:
 2. `[KISS]` Overly clever expressions, deep nesting (> 2 levels), or unnecessary design patterns.
 3. `[SINE]` Pass-through wrappers, redundant DTO conversions, or files that can be inlined/deleted.
 4. `[CALISTHENICS]` Unnecessary `else` blocks, deep indentation, cryptic abbreviations, Law of Demeter train wrecks, or unvalidated primitive obsession.
+5. `[SOLID]` Mixing I/O/transport with domain logic in a single function, or dead/unimplemented stubs in contracts (LSP violation).

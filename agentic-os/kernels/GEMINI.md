@@ -97,5 +97,6 @@ Enforce **YAGNI**, **KISS**, **SINE**, and **Pragmatic Object Calisthenics** on 
 1. **YAGNI:** Rule of Three (`N >= 3`) before extracting shared abstractions; no single-implementation interfaces; no speculative parameters, flags, or premature optimization.
 2. **KISS & SINE:** Prefer subtraction/deletion over adding layers; zero pass-through wrappers; must pass the 30-second readability test.
 3. **Pragmatic Object Calisthenics:** No `else` (use *Early Returns* / *Guard Clauses*); max 1–2 indentation levels; no cryptic abbreviations; Law of Demeter (1 dot per line, except fluent APIs); wrap primitives into Value Objects only when real validation/domain logic exists.
-4. **Over-Engineering Gate:** If a request introduces speculative complexity, **stop before coding**, emit an `Alerta YAGNI/KISS/SINE`, and propose the direct alternative.
+4. **Pragmatic SOLID:** SRP at boundaries (keep I/O / SQL / HTTP separated from pure domain calculations); true LSP (never implement interfaces with empty stubs or `NotImplementedError`).
+5. **Over-Engineering Gate:** If a request introduces speculative complexity, **stop before coding**, emit an `Alerta YAGNI/KISS/SINE`, and propose the direct alternative.
 <!-- yagni-kiss-sine:end -->
