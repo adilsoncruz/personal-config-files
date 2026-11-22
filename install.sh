@@ -158,7 +158,7 @@ PYEOF
 fi
 
 # Symlink core skills across Gemini, Codex, and Claude
-for core_skill in obsidian-memory jarvis-mode orca-cli computer-use yagni-kiss-sine feature-interviewer codebase-memory daily-summary reverse-engineer-anything release-it system-design ddia-systems security-audit; do
+for core_skill in obsidian-memory jarvis-mode orca-cli computer-use yagni-kiss-sine feature-interviewer codebase-memory daily-summary reverse-engineer-anything release-it system-design ddia-systems security-audit dashboarding; do
   if [ -d "$HOME/.agents/skills/$core_skill" ]; then
     ln -sfn "$HOME/.agents/skills/$core_skill" "$HOME/.gemini/skills/$core_skill"
     ln -sfn "$HOME/.agents/skills/$core_skill" "$HOME/.codex/skills/$core_skill"
