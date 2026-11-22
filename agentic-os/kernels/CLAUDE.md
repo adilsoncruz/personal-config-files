@@ -88,3 +88,14 @@ constraints, edge cases, and non-goals. Do not start coding until requirements a
 clear, unless the user explicitly authorizes documented assumptions. Skip the full
 interview for trivial changes. Then summarize the confirmed requirements, acceptance
 criteria, risks, and plan.
+
+<!-- yagni-kiss-sine:start -->
+## Simplicity & Calisthenics (`yagni-kiss-sine` — always on)
+
+Enforce **YAGNI**, **KISS**, **SINE**, and **Pragmatic Object Calisthenics** on every plan, implementation, and code review (details in `__HOME__/.agents/skills/yagni-kiss-sine/SKILL.md`):
+
+1. **YAGNI:** Rule of Three (`N >= 3`) before extracting shared abstractions; no single-implementation interfaces; no speculative parameters, flags, or premature optimization.
+2. **KISS & SINE:** Prefer subtraction/deletion over adding layers; zero pass-through wrappers; must pass the 30-second readability test.
+3. **Pragmatic Object Calisthenics:** No `else` (use *Early Returns* / *Guard Clauses*); max 1–2 indentation levels; no cryptic abbreviations; Law of Demeter (1 dot per line, except fluent APIs); wrap primitives into Value Objects only when real validation/domain logic exists.
+4. **Over-Engineering Gate:** If a request introduces speculative complexity, **stop before coding**, emit an `Alerta YAGNI/KISS/SINE`, and propose the direct alternative.
+<!-- yagni-kiss-sine:end -->

@@ -34,3 +34,9 @@
 - Não inicie código até os requisitos estarem suficientemente claros, salvo se o usuário autorizar explicitamente prosseguir com suposições documentadas.
 - Para tarefas triviais, faça a alteração diretamente.
 - Depois da entrevista, apresente requisitos confirmados, critérios de aceite, riscos e plano de ação.
+
+## 6. YAGNI + KISS + SINE + Object Calisthenics Pragmático — sempre ativo
+- **YAGNI:** Regra dos 3 (`N >= 3`) antes de extrair abstrações; zero interfaces de 1 única implementação; zero parâmetros/flags "para o futuro".
+- **KISS & SINE:** Subtraia camadas antes de adicionar; zero wrappers pass-through; código legível em 30 segundos.
+- **Object Calisthenics Pragmático:** Proibido `else` (use *Early Return* / *Guard Clauses*); máx. 1–2 níveis de indentação; sem abreviações obscuras; Lei de Demeter (1 ponto por linha, exceto fluent APIs); Value Objects apenas quando houver validação/regra real.
+- **Bloqueio de Over-Engineering:** Se o pedido tiver complexidade especulativa, pare antes de codar, emita um `Alerta YAGNI/KISS/SINE` e proponha a alternativa direta.
