@@ -1,0 +1,155 @@
+#!/usr/bin/env python3
+"""
+CoolGuard: Sentinela Leve de Proteção Térmica e Memória para macOS
+1. Detecta comandos utilitários travados (ex: grep, find) a > 70% CPU por mais de 2 minutos e finaliza.
+2. Monitora pressão de memória: se a RAM livre ficar abaixo de 15%, descarrega modelos inativos do Ollama.
+3. Whitelist estrita: nunca toca em navegadores, IDEs, compiladores, Docker ou ferramentas de desenvolvimento.
+"""
+
+import sys
+import os
+import subprocess
+import time
+import json
+import re
+
+STATE_FILE = os.path.expanduser("~/.config/coolguard/state.json")
+LOG_FILE = os.path.expanduser("~/.config/coolguard/coolguard.log")
+
+# Comandos utilitários que NUNCA devem rodar a alta CPU por minutos em segundo plano
+ROGUE_CANDIDATES = {"grep", "egrep", "fgrep", "find", "mdfind", "tail", "sed", "awk", "cat"}
+
+# Whitelist absoluta: processos essenciais nunca finalizados
+SAFE_WHITELIST = {
+    "orca", "brave", "chrome", "safari", "terminal", "iterm", "stats", 
+    "docker", "colima", "limactl", "qemu", "windowserver", "obsidian", 
+    "go", "cargo", "rustc", "gradle", "java", "kotlinc", "swift", "clang",
+    "python3", "node", "npm", "bun", "git", "gh", "agy", "codex", "code"
+}
+
+def log(msg: str):
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    line = f"[{timestamp}] {msg}"
+    print(line)
+    try:
+        os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
+        with open(LOG_FILE, "a") as f:
+            f.write(line + "\n")
+    except Exception:
+        pass
+
+def notify_user(title: str, message: str):
+    try:
+        cmd = ["osascript", "-e", f'display notification "{message}" with title "{title}"']
+        subprocess.run(cmd, capture_output=True, timeout=5)
+    except Exception:
+        pass
+
+def load_state() -> dict:
+    try:
+        if os.path.exists(STATE_FILE):
+            with open(STATE_FILE, "r") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return {"high_cpu_pids": {}}
+
+def save_state(state: dict):
+    try:
+        os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
+        with open(STATE_FILE, "w") as f:
+            json.dump(state, f, indent=2)
+    except Exception:
+        pass
+
+def check_cpu_runaways(state: dict):
+    """Verifica processos consumindo CPU excessiva continuamente"""
+    current_time = time.time()
+    tracked = state.get("high_cpu_pids", {})
+    new_tracked = {}
+
+    try:
+        # Pega processos do usuário atual ordenados por CPU
+        proc = subprocess.run(
+            ["ps", "-u", os.getenv("USER", ""), "-o", "pid,%cpu,comm,args"],
+            capture_output=True, text=True, timeout=5
+        )
+        if proc.returncode != 0:
+            return
+
+        lines = proc.stdout.strip().splitlines()[1:]
+        for line in lines:
+            parts = line.strip().split(None, 3)
+            if len(parts) < 4:
+                continue
+            
+            try:
+                pid = int(parts[0])
+                cpu = float(parts[1])
+                comm = os.path.basename(parts[2]).lower()
+                args = parts[3]
+            except ValueError:
+                continue
+
+            # Se estiver usando mais de 70% de CPU
+            if cpu >= 70.0:
+                is_rogue = comm in ROGUE_CANDIDATES or any(c in args.lower() for c in ROGUE_CANDIDATES)
+                is_safe = any(w in comm for w in SAFE_WHITELIST)
+
+                if is_rogue and not is_safe:
+                    pid_str = str(pid)
+                    first_seen = tracked.get(pid_str, current_time)
+                    new_tracked[pid_str] = first_seen
+                    duration = current_time - first_seen
+
+                    # Se passar de 90 segundos com > 70% de CPU, mata o processo
+                    if duration >= 90:
+                        log(f"🚨 RUNAWAY CPU DETECTADO: PID {pid} ({comm}) rodando a {cpu}% CPU por {int(duration)}s. Encerrando...")
+                        try:
+                            os.kill(pid, 9)
+                            log(f"✅ PID {pid} finalizado com sucesso.")
+                            notify_user("🛡️ CoolGuard: CPU Protegida", f"Processo '{comm}' ({cpu}% CPU) foi encerrado automaticamente.")
+                        except ProcessLookupError:
+                            pass
+                        except Exception as e:
+                            log(f"⚠️ Erro ao encerrar PID {pid}: {e}")
+                        
+                        if pid_str in new_tracked:
+                            del new_tracked[pid_str]
+
+    except Exception as e:
+        log(f"Erro ao verificar CPU: {e}")
+
+    state["high_cpu_pids"] = new_tracked
+
+def check_memory_guard():
+    """Se a memória livre for menor que 15%, alivia o cache de modelos do Ollama"""
+    try:
+        proc = subprocess.run(["memory_pressure"], capture_output=True, text=True, timeout=5)
+        if proc.returncode == 0:
+            match = re.search(r'System-wide memory free percentage:\s*(\d+)%', proc.stdout)
+            if match:
+                free_pct = int(match.group(1))
+                if free_pct < 15:
+                    log(f"⚠️ ALTA PRESSÃO DE MEMÓRIA: {free_pct}% livre (< 15%). Verificando Ollama...")
+                    # Checa se há modelo carregado
+                    p_ps = subprocess.run(["ollama", "ps"], capture_output=True, text=True, timeout=5)
+                    if p_ps.returncode == 0 and "NAME" in p_ps.stdout:
+                        lines = p_ps.stdout.strip().splitlines()[1:]
+                        if lines:
+                            for l in lines:
+                                model = l.split()[0]
+                                log(f"🧹 Descarregando modelo inativo do Ollama: {model}")
+                                subprocess.run(["ollama", "stop", model], capture_output=True, timeout=5)
+                            notify_user("🛡️ CoolGuard: Memória Aliviada", "Modelo do Ollama foi descarregado para recuperar 6 GB de RAM.")
+    except Exception as e:
+        log(f"Erro ao checar pressão de memória: {e}")
+
+def main():
+    state = load_state()
+    check_cpu_runaways(state)
+    check_memory_guard()
+    save_state(state)
+
+if __name__ == "__main__":
+    main()

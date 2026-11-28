@@ -1,31 +1,38 @@
 tap "anomalyco/tap"
+tap "libracoder/kiri"
+
+# Cloud & Infrastructure
 brew "awscli"
-brew "colima"
+cask "gcloud-cli"
+cask "session-manager-plugin"
+
+# Container Runtime & Docker Compatibility
+cask "libracoder/kiri/kiri"
 brew "docker"
 brew "docker-buildx"
 brew "docker-compose"
-brew "ffmpeg"
-brew "ffmpeg-full"
-brew "gemini-cli"
+
+# Developer Runtimes & CLI Tools
 brew "gh"
 brew "gnupg"
 brew "htop"
 brew "make"
 brew "mise"
-brew "ollama"
-brew "opencode"
 brew "pipx"
 brew "starship"
 brew "uv"
-cask "blackhole-2ch"
-cask "blender"
+
+# AI Runtimes
+brew "gemini-cli"
+brew "ollama"
+brew "opencode"
+cask "ollama-app"
+
+# Developer Apps & Productivity
 cask "dbx"
-cask "domzilla-caffeine"
-cask "gcloud-cli"
-cask "godot"
 cask "insomnia"
 cask "obsidian"
-cask "ollama-app"
-cask "session-manager-plugin"
+
+# macOS Utilities
+cask "domzilla-caffeine"
 cask "stats"
-cask "unity-hub"

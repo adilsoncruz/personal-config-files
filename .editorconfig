@@ -1,33 +1,48 @@
 root = true
 
-[**.js]
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# JavaScript, TypeScript, Web & Configs
+[*.{js,jsx,ts,tsx,mjs,cjs,json,jsonc,html,css,scss,vue,svelte}]
 indent_style = space
 indent_size = 2
 
-[**.json]
+# YAML (CI/CD, Kubernetes, Compose)
+[*.{yml,yaml}]
 indent_style = space
 indent_size = 2
 
-[**.jsx]
-e4x = true
+# Python (PEP 8)
+[*.py]
+indent_style = space
+indent_size = 4
+max_line_length = 100
+
+# Go (gofmt requires tabs)
+[*.go]
+indent_style = tab
+indent_size = 4
+
+# Rust
+[*.rs]
+indent_style = space
+indent_size = 4
+
+# Shell Scripts
+[*.{sh,bash,zsh}]
 indent_style = space
 indent_size = 2
 
-[**.css]
-indent_style = space
-indent_size = 4
+# Makefiles (Tabs required by make syntax)
+[Makefile]
+indent_style = tab
 
-[**.py]
-indent_style = space
-indent_size = 4
-max_char = 78
-
-[**.html]
-indent_style = space
-indent_size = 4
-max_char = 78
-brace_style = expand
-
-[**.yml]
-indent_style = space
-indent_size = 4
+# Markdown (preserve trailing spaces for line breaks)
+[*.md]
+trim_trailing_whitespace = false

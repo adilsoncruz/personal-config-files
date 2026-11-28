@@ -1,20 +1,32 @@
-#aliases for Tmux
-alias tmux='tmux -2'
-alias ta='tmux attach -t'
-alias tnew='tmux new -s'
-alias tls='tmux ls'
-alias tkill='tmux kill-session -t'
+# ==============================================================================
+# Modern Developer & Cloud Aliases (macOS / Kiri / Git / AI)
+# ==============================================================================
 
-# convenience aliases for editing configs
-alias ev='vim ~/.vimrc'
-alias et='vim ~/.tmux.conf'
-alias ez='vim ~/.zshrc'
+# Git Shortcuts
+alias g="git"
+alias gst="git status"
+alias gco="git checkout"
+alias gcb="git checkout -b"
+alias gaa="git add -A"
+alias gcm="git commit -m"
+alias glog="git log --oneline --decorate --graph -n 15"
+alias gdiff="git diff"
+alias gpull="git pull"
+alias gpush="git push"
 
-# xclip aliases
-alias cs='xclip -selection clipboard'
+# Kiri & Container Operations (replaces Colima / Docker commands)
+alias dps="kiri ps"
+alias dimg="kiri images"
+alias dstop="kiri stop \$(kiri ps -q) 2>/dev/null || true"
+alias dclean="kiri rm \$(kiri ps -qa -f status=exited) 2>/dev/null || true"
 
-# docker remove exited containers
-alias docrme='docker rm -v $(docker ps -qa -f status=exited)'
+# Orca & AI Tooling
+alias oshare="orca-share"
+alias osand="orca-sandbox"
+alias ask="ask"
 
-# docker pause and remove 
-alias docsr='docker rm $(docker stop $(docker ps -q))'
+# macOS Native Clipboard & Convenience
+alias copy="pbcopy"
+alias paste="pbpaste"
+alias ez="code ~/.zshrc || nano ~/.zshrc"
+alias reload="source ~/.zshrc && echo '✓ zshrc reloaded'"

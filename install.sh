@@ -43,10 +43,8 @@ if ! cmp -s "$REPO_DIR/.gitconfig" "$HOME/.gitconfig" 2>/dev/null; then
   cp "$REPO_DIR/.gitconfig" "$HOME/.gitconfig"
 fi
 
-[ -f "$REPO_DIR/.tmux.conf" ] && cp "$REPO_DIR/.tmux.conf" "$HOME/.tmux.conf"
-[ -f "$REPO_DIR/.vimrc" ] && cp "$REPO_DIR/.vimrc" "$HOME/.vimrc"
-mkdir -p "$HOME/.vim"
-[ -f "$REPO_DIR/.editorconfig" ] && cp "$REPO_DIR/.editorconfig" "$HOME/.vim/.editorconfig"
+[ -f "$REPO_DIR/.editorconfig" ] && cp "$REPO_DIR/.editorconfig" "$HOME/.editorconfig"
+[ -f "$REPO_DIR/alias.zsh" ] && cp "$REPO_DIR/alias.zsh" "$HOME/.alias.zsh"
 
 if [ ! -f "$HOME/.zshrc.local" ]; then
   cat > "$HOME/.zshrc.local" <<'EOF'
@@ -54,6 +52,38 @@ if [ ! -f "$HOME/.zshrc.local" ]; then
 # export OMNIROUTE_API_KEY="your-key-here"
 EOF
   chmod 600 "$HOME/.zshrc.local"
+fi
+
+# Global Git hooks & gitignore
+if [ -f "$REPO_DIR/.gitignore_global" ]; then
+  cp "$REPO_DIR/.gitignore_global" "$HOME/.gitignore_global"
+  git config --global core.excludesfile "$HOME/.gitignore_global" 2>/dev/null || true
+fi
+
+if [ -d "$REPO_DIR/git-hooks" ]; then
+  mkdir -p "$HOME/.git-hooks"
+  cp -r "$REPO_DIR/git-hooks/"* "$HOME/.git-hooks/"
+  chmod +x "$HOME/.git-hooks/"*
+  git config --global core.hooksPath "$HOME/.git-hooks" 2>/dev/null || true
+fi
+
+# Binaries & CLI tools
+mkdir -p "$HOME/bin"
+for bfile in "$REPO_DIR/bin/"*; do
+  bname="$(basename "$bfile")"
+  cp "$bfile" "$HOME/bin/$bname"
+  chmod +x "$HOME/bin/$bname"
+done
+ln -sfn "$HOME/bin/orca-smart-dispatch" "$HOME/bin/ask"
+
+# Orca Plugins
+if [ -d "$REPO_DIR/orca-plugins" ]; then
+  mkdir -p "$HOME/.orca/plugins"
+  for pdir in "$REPO_DIR/orca-plugins/"*/; do
+    pname="$(basename "$pdir")"
+    mkdir -p "$HOME/.orca/plugins/$pname"
+    cp -r "$pdir"* "$HOME/.orca/plugins/$pname/"
+  done
 fi
 
 # =========================================
@@ -168,7 +198,7 @@ done
 
 for claude_skill in "$AGENTIC_DIR/skills/"*/; do
   sname="$(basename "$claude_skill")"
-  if [ "$sname" != "ai-pdf-template-importer" ] && [ -d "$HOME/.agents/skills/$sname" ]; then
+  if [ -d "$HOME/.agents/skills/$sname" ]; then
     ln -sfn "$HOME/.agents/skills/$sname" "$HOME/.claude/skills/$sname"
   fi
 done
