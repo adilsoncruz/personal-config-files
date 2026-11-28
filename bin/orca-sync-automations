@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+"""
+orca-sync-automations:
+Garante que todo repositório adicionado ao Orca tenha automaticamente
+uma automação de limpeza de worktrees e branches mergeadas.
+"""
+
+import subprocess
+import json
+
+def get_repos():
+    proc = subprocess.run(["orca", "repo", "list", "--json"], capture_output=True, text=True)
+    if proc.returncode != 0:
+        return []
+    try:
+        return json.loads(proc.stdout).get("result", {}).get("repos", [])
+    except Exception:
+        return []
+
+def get_automations():
+    proc = subprocess.run(["orca", "automations", "list", "--json"], capture_output=True, text=True)
+    if proc.returncode != 0:
+        return []
+    try:
+        return json.loads(proc.stdout).get("result", {}).get("automations", [])
+    except Exception:
+        return []
+
+def main():
+    repos = get_repos()
+    automations = get_automations()
+    existing_auto_repos = {a.get("repoId") for a in automations if a.get("repoId")}
+    
+    for r in repos:
+        repo_id = r.get("id")
+        repo_name = r.get("displayName")
+        repo_path = r.get("path")
+        
+        # Se o repositório ainda não tiver automação de limpeza
+        if repo_id not in existing_auto_repos and repo_path:
+            auto_name = f"Auto-Prune: {repo_name}"
+            print(f"📦 Novo repositório detectado sem automação: {repo_name}")
+            print(f"   Criando automação de limpeza no Orca...")
+            
+            cmd = [
+                "orca", "automations", "create",
+                "--name", auto_name,
+                "--trigger", "hourly",
+                "--provider", "antigravity",
+                "--repo", f"path:{repo_path}",
+                "--prompt", "Execute /Users/adilsoncruz/bin/orca-prune para limpar worktrees inativas e deletar branches que ja foram mergeadas na main."
+            ]
+            res = subprocess.run(cmd, capture_output=True, text=True)
+            if res.returncode == 0:
+                print(f"   ✅ Automação criada com sucesso para {repo_name}!")
+            else:
+                print(f"   ⚠️ Aviso: {res.stderr.strip()}")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+"""
+ci-autofix: Investigador e Autofix Automático de Falhas no CI
+Acionado quando o GitHub Actions / CI quebra (github.ci_failed).
+1. Isola os logs e identifica o erro exato
+2. Reproduz localmente na sandbox do projeto
+3. Gera o fix aplicando regras de Clean Code e SOLID
+4. Roda os testes locais até ficarem 100% verdes
+5. Commita e dá push na branch para destravar o PR
+"""
+
+import sys
+import os
+import subprocess
+import re
+
+def get_last_ci_failure():
+    """Busca o log da última execução falha do GitHub Actions via gh CLI"""
+    try:
+        proc = subprocess.run(
+            ["gh", "run", "list", "--status", "failure", "--limit", "1", "--json", "databaseId,headBranch,name,url"],
+            capture_output=True, text=True
+        )
+        if proc.returncode == 0:
+            import json
+            runs = json.loads(proc.stdout)
+            if runs:
+                return runs[0]
+    except Exception:
+        pass
+    return None
+
+def fetch_failure_logs(run_id: str) -> str:
+    """Extrai apenas a stack trace e erro do log do CI"""
+    try:
+        proc = subprocess.run(
+            ["gh", "run", "view", str(run_id), "--log-failed"],
+            capture_output=True, text=True
+        )
+        if proc.returncode == 0:
+            raw = proc.stdout
+            # Destilação de log: pega as linhas de erro
+            lines = raw.splitlines()
+            error_lines = [l for l in lines if re.search(r'(error|failed|failure|panic|fatal|exception)', l, re.I)]
+            return "\n".join(error_lines[-30:]) if error_lines else raw[-2000:]
+    except Exception:
+        pass
+    return "Não foi possível extrair os logs detalhados do CI."
+
+def main():
+    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    print("🚨 CI AUTOFIX & RESILIENCE AGENT")
+    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    
+    last_run = get_last_ci_failure()
+    if not last_run:
+        print("✨ Nenhum CI quebrado detectado no momento. Pipeline está verde!")
+        return
+
+    run_id = last_run.get("databaseId")
+    branch = last_run.get("headBranch")
+    workflow = last_run.get("name")
+    url = last_run.get("url")
+
+    print(f"📦 Pipeline Falho: {workflow} (Run #{run_id})")
+    print(f"🌿 Branch Afetada: {branch}")
+    print(f"🔗 Link: {url}")
+    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+
+    print("🔍 Extraindo logs de erro do GitHub Actions...")
+    error_summary = fetch_failure_logs(run_id)
+    print("\n--- [Stack Trace Isolda pelo Interceptor de Observation] ---")
+    print(error_summary)
+    print("------------------------------------------------------------\n")
+
+    print("🤖 Despachando Agente Especialista para reproduzir e aplicar o fix...")
+    prompt = f"""
+O CI quebrou no GitHub Actions na branch '{branch}' (Workflow: {workflow}).
+Logs de erro capturados:
+{error_summary}
+
+Instruções:
+1. Identifique os arquivos e linhas exatas que causaram a quebra.
+2. Aplique a correção respeitando Clean Code e SOLID.
+3. Execute a suíte de testes localmente até passar.
+4. Prepare o commit de correção: 'fix(ci): resolve build/test failure on {workflow}'.
+"""
+    # Dispara via roteador ask usando Gemini 4 Carbon / Claude Sonnet
+    subprocess.run(["ask", prompt])
+
+if __name__ == "__main__":
+    main()

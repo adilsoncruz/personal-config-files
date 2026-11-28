@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# orca-sandbox: Executa comandos ou shells interativos em containers Kiri isolados
+# Monta o worktree atual do Orca em /workspace com Linux nativo
+
+set -e
+
+CYAN="\033[36m"
+GREEN="\033[32m"
+YELLOW="\033[33m"
+GRAY="\033[38;5;240m"
+BOLD="\033[1m"
+RESET="\033[0m"
+
+KIRI_BIN="/Users/adilsoncruz/.local/bin/kiri"
+if [ ! -x "$KIRI_BIN" ]; then
+    KIRI_BIN=$(command -v kiri 2>/dev/null || true)
+fi
+
+if [ -z "$KIRI_BIN" ] || [ ! -x "$KIRI_BIN" ]; then
+    echo "❌ Kiri CLI não encontrado."
+    exit 1
+fi
+
+IMAGE=""
+PORTS=()
+ENVS=()
+COMMAND=()
+
+# Parse args
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -i|--image)
+            IMAGE="$2"
+            shift 2
+            ;;
+        -p|--port)
+            PORTS+=("-p" "$2")
+            shift 2
+            ;;
+        -e|--env)
+            ENVS+=("-e" "$2")
+            shift 2
+            ;;
+        --help|-h)
+            echo -e "${BOLD}orca-sandbox${RESET} - Executa comandos no worktree atual dentro de um container Kiri"
+            echo
+            echo -e "${BOLD}Uso:${RESET} orca-sandbox [-i imagem] [-p porta] [comando...]"
+            echo -e "Exemplos:"
+            echo -e "  ${CYAN}orca-sandbox${RESET}                     # Abre shell interativo com detecção de stack"
+            echo -e "  ${CYAN}orca-sandbox npm test${RESET}            # Roda npm test dentro do Node"
+            echo -e "  ${CYAN}orca-sandbox pytest${RESET}              # Roda pytest dentro do Python"
+            echo -e "  ${CYAN}orca-sandbox -i ubuntu:24.04 bash${RESET} # Abre bash no Ubuntu 24.04"
+            echo -e "  ${CYAN}orca-sandbox -p 3000:3000 npm run dev${RESET}"
+            exit 0
+            ;;
+        *)
+            COMMAND+=("$1")
+            shift
+            ;;
+    esac
+done
+
+# Auto-detecção de imagem se não especificada
+if [ -z "$IMAGE" ]; then
+    if [ -f "package.json" ]; then
+        IMAGE="node:22-alpine"
+    elif [ -f "requirements.txt" ] || [ -f "pyproject.toml" ]; then
+        IMAGE="python:3.12-alpine"
+    elif [ -f "go.mod" ]; then
+        IMAGE="golang:1.24-alpine"
+    elif [ -f "Cargo.toml" ]; then
+        IMAGE="rust:alpine"
+    else
+        IMAGE="alpine:latest"
+    fi
+fi
+
+CURRENT_DIR="$(pwd)"
+echo -e "${CYAN}🐳 [Orca + Kiri] Isolando worktree atual:${RESET} ${BOLD}${CURRENT_DIR}${RESET}"
+echo -e "${GRAY}   Imagem: ${IMAGE}${RESET}"
+
+# Se nenhum comando for fornecido, abre shell interativo
+if [ ${#COMMAND[@]} -eq 0 ]; then
+    # Checa se o container tem bash ou sh
+    EXEC_CMD="sh"
+    echo -e "${GREEN}✓ Iniciando shell interativo no container...${RESET}"
+    exec "$KIRI_BIN" run --rm -it \
+        -v "$CURRENT_DIR:/workspace" \
+        -w /workspace \
+        "${PORTS[@]}" \
+        "${ENVS[@]}" \
+        "$IMAGE" "$EXEC_CMD"
+else
+    exec "$KIRI_BIN" run --rm \
+        -v "$CURRENT_DIR:/workspace" \
+        -w /workspace \
+        "${PORTS[@]}" \
+        "${ENVS[@]}" \
+        "$IMAGE" "${COMMAND[@]}"
+fi

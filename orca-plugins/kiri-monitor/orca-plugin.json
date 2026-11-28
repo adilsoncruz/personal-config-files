@@ -1,0 +1,23 @@
+{
+  "manifestVersion": 2,
+  "id": "kiri-monitor",
+  "name": "Kiri Runtime",
+  "version": "0.1.0",
+  "description": "Kiri container runtime, sandboxing, and dev tunnels inside Orca.",
+  "engines": {
+    "orca": ">=1.4.246"
+  },
+  "execution": "sandboxed-ui",
+  "pluginApi": 1,
+  "contributes": {
+    "panels": [
+      {
+        "id": "kiri-monitor",
+        "title": "Kiri Runtime",
+        "icon": "blocks",
+        "entry": "src/panel.tsx",
+        "ui": "components"
+      }
+    ]
+  }
+}

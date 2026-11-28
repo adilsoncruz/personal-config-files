@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# orca-share: Expõe portas locais de worktrees do Orca na internet via Kiri Tunnel
+
+set -e
+
+CYAN="\033[36m"
+GREEN="\033[32m"
+YELLOW="\033[33m"
+GRAY="\033[38;5;240m"
+BOLD="\033[1m"
+RESET="\033[0m"
+
+KIRI_BIN="/Users/adilsoncruz/.local/bin/kiri"
+if [ ! -x "$KIRI_BIN" ]; then
+    KIRI_BIN=$(command -v kiri 2>/dev/null || true)
+fi
+
+if [ -z "$KIRI_BIN" ] || [ ! -x "$KIRI_BIN" ]; then
+    echo "❌ Kiri CLI não encontrado. Verifique se o Kiri.app está instalado."
+    exit 1
+fi
+
+PORT="$1"
+NAME="$2"
+
+if [ "$PORT" = "--help" ] || [ "$PORT" = "-h" ] || [ -z "$PORT" ]; then
+    echo -e "${BOLD}orca-share${RESET} - Expõe portas locais de worktrees do Orca na internet via Kiri Tunnel"
+    echo
+    echo -e "${BOLD}Uso:${RESET} orca-share <porta> [nome-opcional]"
+    echo -e "Exemplos:"
+    echo -e "  ${CYAN}orca-share 3000${RESET}               # Expõe localhost:3000 com URL pública aleatória"
+    echo -e "  ${CYAN}orca-share 8080 meu-app${RESET}       # Expõe na URL meu-app.runkiri.cloud"
+    echo -e "  ${CYAN}orca-share status${RESET}             # Mostra os túneis Kiri ativos"
+    echo -e "  ${CYAN}orca-share stop${RESET}               # Encerra túneis"
+    echo
+    echo -e "${GRAY}Portas locais detectadas ativas agora:${RESET}"
+    lsof -iTCP -sTCP:LISTEN -P -n 2>/dev/null | grep -E 'node|python|go|bun|deno|vite|next' | head -n 5 || echo "  (nenhuma porta de app web detectada)"
+    exit 0
+fi
+
+echo -e "${CYAN}⚡ [Orca + Kiri] Compartilhando porta local ${BOLD}$PORT${RESET}${CYAN}...${RESET}"
+
+if [ -n "$NAME" ]; then
+    exec "$KIRI_BIN" share "$PORT" --name "$NAME"
+else
+    exec "$KIRI_BIN" share "$PORT"
+fi

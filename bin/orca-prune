@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+"""
+orca-prune: Limpa automaticamente worktrees concluídas e branches mergeadas no Orca.
+Usa a API do Orca CLI para encontrar worktrees inativas/concluídas, verificar
+se a branch já foi mergeada no upstream/main e removê-la com segurança.
+"""
+
+import sys
+import os
+import subprocess
+import json
+
+def get_orca_worktrees():
+    """Lista todas as worktrees registradas no Orca"""
+    cmd = ["orca", "worktree", "ps", "--json"]
+    proc = subprocess.run(cmd, text=True, capture_output=True)
+    if proc.returncode != 0:
+        print(f"Erro ao consultar worktrees do Orca: {proc.stderr}")
+        return []
+    try:
+        data = json.loads(proc.stdout)
+        return data.get("result", {}).get("worktrees", [])
+    except Exception as e:
+        print(f"Erro ao parsear saída do Orca: {e}")
+        return []
+
+def is_branch_merged(repo_path: str, branch_name: str) -> bool:
+    """Verifica se a branch foi mergeada na main ou master"""
+    try:
+        clean_branch = branch_name.replace("refs/heads/", "")
+        
+        # Pega a branch padrão do repositório
+        detect_main = subprocess.run(
+            ["git", "-C", repo_path, "rev-parse", "--verify", "main"],
+            capture_output=True, text=True
+        )
+        target = "main" if detect_main.returncode == 0 else "master"
+
+        # Verifica se o commit da branch já está contido na main/master
+        proc = subprocess.run(
+            ["git", "-C", repo_path, "branch", "--merged", target],
+            capture_output=True, text=True
+        )
+        if proc.returncode == 0:
+            merged_branches = [b.strip().replace("*", "").strip() for b in proc.stdout.splitlines()]
+            return clean_branch in merged_branches
+    except Exception:
+        pass
+    return False
+
+def remove_worktree(worktree_id: str, delete_branch: bool = True):
+    """Remove a worktree e opcionalmente a branch associada no Orca"""
+    cmd = ["orca", "worktree", "rm", "--worktree", worktree_id]
+    if delete_branch:
+        cmd.append("--delete-branch")
+    
+    proc = subprocess.run(cmd, text=True, capture_output=True)
+    return proc.returncode == 0, proc.stdout.strip() or proc.stderr.strip()
+
+def main():
+    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    print("🧹 ORCA AUTO-PRUNE: Faxina de Worktrees e Branches Mergeadas")
+    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    
+    worktrees = get_orca_worktrees()
+    if not worktrees:
+        print("Nenhuma worktree encontrada no Orca.")
+        return
+
+    pruned_count = 0
+    
+    for wt in worktrees:
+        # Ignora a branch principal/default (main/master)
+        if wt.get("isMainWorktree") or wt.get("defaultBranch"):
+            continue
+            
+        repo_name = wt.get("repo", "desconhecido")
+        path = wt.get("path")
+        branch = wt.get("branch", "")
+        status = wt.get("workspaceStatus")
+        is_active = wt.get("isActive", False)
+        live_terminals = wt.get("liveTerminalCount", 0)
+        
+        clean_branch = branch.replace("refs/heads/", "")
+        
+        # Critério de limpeza: Status completed OU branch já mergeada no upstream
+        merged = is_branch_merged(path, clean_branch) if path and os.path.exists(path) else False
+        should_prune = (status == "completed") or (merged and not is_active and live_terminals == 0)
+        
+        if should_prune:
+            print(f"\n📦 Repositório: {repo_name} | Branch: {clean_branch}")
+            print(f"   • Motivo: {'Branch mergeada na main' if merged else 'Status completed'}")
+            print(f"   • Removendo worktree e branch no Orca...")
+            
+            wt_selector = f"path:{path}"
+            success, msg = remove_worktree(wt_selector, delete_branch=merged)
+            if success:
+                print(f"   ✅ Removido com sucesso!")
+                pruned_count += 1
+            else:
+                print(f"   ⚠️ Aviso: {msg}")
+
+    print("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    if pruned_count > 0:
+        print(f"🎉 Concluído: {pruned_count} worktree(s) limpa(s) com sucesso!")
+    else:
+        print("✨ Tudo limpo! Nenhuma worktree inativa ou branch mergeada pendente.")
+    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+
+if __name__ == "__main__":
+    main()
