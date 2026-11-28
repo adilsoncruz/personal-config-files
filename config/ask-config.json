@@ -1,0 +1,52 @@
+{
+  "matrix": {
+    "local_snippets": {
+      "engine": "ollama",
+      "model": "qwen3.5:9b",
+      "description": "Funções isoladas, validações, regex, Dockerfile (0 tokens)",
+      "alternatives": ["qwen3.5:4b", "devstral-32k:latest", "gemma4:26b"]
+    },
+    "fast_docs": {
+      "engine": "antigravity",
+      "model": "Gemini 3.8 Flash (Low)",
+      "description": "README, typos, documentação, resumos rápidos",
+      "alternatives": ["Gemini 3.8 Flash (Medium)"]
+    },
+    "standard_engineering": {
+      "engine": "antigravity",
+      "model": "Gemini 4 Hydrogen",
+      "description": "Features diárias, bugfixes normais e endpoints (alta velocidade)",
+      "alternatives": ["Gemini 4 Carbon (Medium)", "Gemini 4 Argon (Medium)"]
+    },
+    "code_quality_solid": {
+      "engine": "antigravity",
+      "model": "Claude Sonnet 5.5 (Medium)",
+      "description": "Clean Architecture, SOLID, Object Calisthenics",
+      "alternatives": ["Claude Sonnet 5.5 (High)"]
+    },
+    "big_context_specs": {
+      "engine": "antigravity",
+      "model": "Gemini 4 Neon (Medium)",
+      "description": "Análise de repositório inteiro, specs e ADRs (1M+ tokens)",
+      "alternatives": ["Gemini 4 Neon (High)", "Gemini 4 Hydrogen (Medium)"]
+    },
+    "hard_debugging": {
+      "engine": "antigravity",
+      "model": "Claude Opus 5.5 (High)",
+      "description": "Deadlocks, race conditions, memory leaks, concorrência fina",
+      "alternatives": ["Claude Opus 5.5 (Medium)"]
+    },
+    "deep_reasoning_codex": {
+      "engine": "codex",
+      "model": "gpt-5.6-luna",
+      "description": "Raciocínio formal sob demanda ou prefixo 'codex:'",
+      "alternatives": ["o3", "gpt-4o"]
+    }
+  },
+  "settings": {
+    "force_local_mode": false,
+    "auto_fallback_enabled": true,
+    "sanitize_secrets": true,
+    "distill_build_logs": true
+  }
+}

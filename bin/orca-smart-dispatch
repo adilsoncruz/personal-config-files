@@ -1,0 +1,481 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "prompt-toolkit>=3.0.40",
+# ]
+# ///
+"""
+ask - Adaptive AI Router com Matriz Completa de Modelos (Antigravity, Codex & Ollama)
+Roteia entre:
+1. Local (Ollama): qwen3.5:9b, devstral-32k, gemma4:26b
+2. Antigravity Fast (Docs, Lint, Typos): Gemini 3.8 Flash (Low)
+3. Antigravity Standard (Features, Bugs): Gemini 4 Hydrogen
+4. Antigravity Code Quality & SOLID: Claude Sonnet 5.5 (Medium)
+5. Antigravity Big Context & Specs: Gemini 4 Neon (High)
+6. Antigravity & Codex Deep Reasoning: Claude Opus 5.5 / Codex gpt-5.6-luna / o3
+"""
+
+import sys
+import os
+import re
+import json
+import subprocess
+import shutil
+import time
+import threading
+from prompt_toolkit import PromptSession
+from prompt_toolkit.filters import to_filter
+from prompt_toolkit.formatted_text import ANSI
+from prompt_toolkit.history import FileHistory
+from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.styles import Style
+
+HISTORY_FILE = os.path.expanduser("~/.ask_history")
+CONFIG_PATHS = [
+    os.path.expanduser("~/projects/personal-config-files/config/ask-config.json"),
+    os.path.expanduser("~/.ask-config.json"),
+]
+
+PROMPT_STYLE = Style.from_dict({
+    "bottom-toolbar": "noreverse",
+    "bottom-toolbar.text": "noreverse",
+})
+
+RESET = "\033[0m"
+BOLD = "\033[1m"
+DIM = "\033[2m"
+YELLOW = "\033[33m"
+GOLD = "\033[38;5;220m"
+CYAN = "\033[36m"
+GREEN = "\033[32m"
+GRAY = "\033[38;5;240m"
+LIGHT_GRAY = "\033[38;5;248m"
+
+# Carregamento Dinâmico de Configuração
+DEFAULT_MATRIX = {
+    "local": "qwen3.5:9b",
+    "fast": "Gemini 3.8 Flash (Low)",
+    "standard": "Gemini 4 Hydrogen",
+    "solid": "Claude Sonnet 5.5 (Medium)",
+    "neon": "Gemini 4 Neon (Medium)",
+    "deep": "Claude Opus 5.5 (High)",
+    "codex": "gpt-5.6-luna",
+}
+
+def load_matrix_config() -> dict[str, str]:
+    matrix = dict(DEFAULT_MATRIX)
+    for path in CONFIG_PATHS:
+        if os.path.isfile(path):
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    m = data.get("matrix", {})
+                    if "local_snippets" in m: matrix["local"] = m["local_snippets"].get("model", matrix["local"])
+                    if "fast_docs" in m: matrix["fast"] = m["fast_docs"].get("model", matrix["fast"])
+                    if "standard_engineering" in m: matrix["standard"] = m["standard_engineering"].get("model", matrix["standard"])
+                    if "code_quality_solid" in m: matrix["solid"] = m["code_quality_solid"].get("model", matrix["solid"])
+                    if "big_context_specs" in m: matrix["neon"] = m["big_context_specs"].get("model", matrix["neon"])
+                    if "hard_debugging" in m: matrix["deep"] = m["hard_debugging"].get("model", matrix["deep"])
+                    if "deep_reasoning_codex" in m: matrix["codex"] = m["deep_reasoning_codex"].get("model", matrix["codex"])
+                break
+            except Exception:
+                pass
+    return matrix
+
+MATRIX = load_matrix_config()
+
+def get_terminal_width():
+    return shutil.get_terminal_size((80, 20)).columns
+
+class ThinkingSpinner:
+    def __init__(self, tag_text=""):
+        self.tag_text = tag_text
+        self.stop_event = threading.Event()
+        self.start_time = time.time()
+        self.frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
+        self.thread = threading.Thread(target=self._animate, daemon=True)
+
+    def update_tag(self, new_tag):
+        self.tag_text = new_tag
+
+    def start(self):
+        self.thread.start()
+
+    def _animate(self):
+        idx = 0
+        while not self.stop_event.is_set():
+            elapsed = time.time() - self.start_time
+            frame = self.frames[idx % len(self.frames)]
+            tag = f" {self.tag_text}" if self.tag_text else ""
+            line = f"\r\033[K{CYAN}{frame}{RESET} {GRAY}thinking... {elapsed:.1f}s{tag}{RESET}"
+            sys.stdout.write(line)
+            sys.stdout.flush()
+            idx += 1
+            time.sleep(0.08)
+
+    def stop(self):
+        self.stop_event.set()
+        self.thread.join(timeout=0.2)
+        sys.stdout.write("\r\033[K")
+        sys.stdout.flush()
+
+def print_banner():
+    logo = f"""
+{CYAN}    _      ____    _  __{RESET}
+{CYAN}   / \\    / ___|  | |/ /{RESET}   {GOLD}ASK • AI MODEL ROUTER{RESET}
+{CYAN}  / _ \\   \\___ \\  | ' / {RESET}   {DIM}Full Spectrum Router: Agy Matrix + Codex + Ollama{RESET}
+{CYAN} / ___ \\   ___) | | . \\ {RESET}   {GRAY}v1.4.0 • Streaming Ativo • /copy /clear /model{RESET}
+{CYAN}/_/   \\_\\ |____/  |_|\\_\\{RESET}
+"""
+    print(logo)
+    print(f"{GOLD}┃{RESET} {BOLD}Matriz Completa Ativa{RESET} (Antigravity Multi-Model + Codex + Ollama).")
+    print(f"{GOLD}┃{RESET} Comandos rápidos: {CYAN}/copy{RESET} (copiar resposta), {CYAN}/clear{RESET} (limpar chat), {CYAN}/help{RESET}.")
+
+def render_footer_line(mode: str, agent_name: str, model_name: str, cost_info: str):
+    width = get_terminal_width()
+    left = f"{GRAY}/help for commands{RESET}"
+    
+    agent_styled = f"{BOLD}{CYAN}[{agent_name}]{RESET}"
+    model_styled = f"{GREEN}{model_name}{RESET}" if "local" in cost_info.lower() else f"{LIGHT_GRAY}{model_name}{RESET}"
+    right = f"{YELLOW}{mode}{RESET} {GRAY}·{RESET} {agent_styled} {model_styled} {GRAY}·{RESET} {DIM}{cost_info}{RESET}"
+    
+    left_len = 18
+    right_len = len(mode) + 3 + len(agent_name) + 2 + 1 + len(model_name) + 3 + len(cost_info)
+    spaces = max(1, width - left_len - right_len)
+    return f"{left}{' ' * spaces}{right}"
+
+def process_observation(raw_output: str) -> str:
+    output = raw_output
+    output = re.sub(r'(AKIA[0-9A-Z]{16})', r'\1[MASKED_AWS_KEY]', output)
+    output = re.sub(r'(Bearer\s+[A-Za-z0-9\-\._~\+\/]+=*)', r'Bearer [MASKED_TOKEN]', output)
+    output = re.sub(r'((?:password|passwd|secret)\s*[:=]\s*[\'"][^\'"]+[\'"])', r'password: "[MASKED_SECRET]"', output, flags=re.IGNORECASE)
+
+    lines = output.splitlines()
+    if len(lines) > 80:
+        error_lines = [i for i, line in enumerate(lines) if re.search(r'(error|exception|fail|fatal|panic)', line, re.I)]
+        if error_lines:
+            start = max(0, error_lines[0] - 5)
+            end = min(len(lines), error_lines[-1] + 15)
+            output = f"[Observation: Ruído de build filtrado ({len(lines)} linhas resumidas)]\n" + "\n".join(lines[start:end])
+
+    return output
+
+# ==============================================================================
+# MATRIZ INTELIGENTE DE ROTEAMENTO (AGY + CODEX + OLLAMA)
+# ==============================================================================
+def classify_with_cloud_flash(prompt: str) -> tuple[str, str, str, str, str] | None:
+    """Classificador Semântico na Nuvem via Gemini Flash (0 MB de RAM local)."""
+    classification_prompt = (
+        "Classifique a complexidade desta tarefa tecnica de desenvolvimento em APENAS UMA PALAVRA:\n"
+        "Opcoes:\n"
+        "- FLASH (consultas rapidas, metricas, tamanho, contagem, regex, snippets, lint, docs, resumos)\n"
+        "- CARBON (engenharia padrao, implementacao de classes, rotas de API, testes normais)\n"
+        "- SONNET (code quality, SOLID, clean architecture, refatoracao conceitual)\n"
+        "- OPUS (deadlocks, condicao de corrida, algoritmos matematicos, concorrencia pesada)\n"
+        "- NEON (analise de repositorio inteiro, specs gigantes)\n\n"
+        f"Tarefa: \"{prompt}\"\n\n"
+        "Responda EXATAMENTE uma das palavras (ex: FLASH):"
+    )
+    try:
+        cmd = ["agy", "--model", MATRIX["fast"], "--dangerously-skip-permissions", "-p", classification_prompt]
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=8)
+        if proc.returncode == 0 and proc.stdout:
+            resp = proc.stdout.strip().upper()
+            if "FLASH" in resp:
+                return ("agy", "Antigravity", MATRIX["fast"], MATRIX["fast"], "fast cloud (0 RAM)")
+            elif "SONNET" in resp:
+                return ("agy", "Antigravity", MATRIX["solid"], MATRIX["solid"], "code quality guard")
+            elif "NEON" in resp:
+                return ("agy", "Antigravity", MATRIX["neon"], MATRIX["neon"], "1M+ context window")
+            elif "OPUS" in resp:
+                return ("agy", "Antigravity", MATRIX["deep"], MATRIX["deep"], "deep reasoning")
+            elif "CARBON" in resp:
+                return ("agy", "Antigravity", MATRIX["standard"], MATRIX["standard"], "standard engineering")
+    except Exception:
+        pass
+    return None
+
+def classify_prompt(prompt: str) -> tuple[str, str, str, str, str]:
+    """
+    Roteador Híbrido de 2 Camadas:
+    1. Fast Path (0 ms): Detecta intenções óbvias instantaneamente sem rede.
+    2. Cloud Semantic Path (Gemini Flash): Classifica frases abertas na nuvem com 0 MB de RAM no Mac.
+    """
+    p = prompt.lower().strip()
+    
+    # ─── CAMADA 1: FAST PATH (0 ms / Regex Direto) ─────────────────────────────
+    # 1. CODEX EXPLICITO OU ALGORITMOS MATEMÁTICOS PESADOS
+    if p.startswith("codex:") or "use codex" in p or re.search(r'\b(codex|matematica pura|prova formal)\b', p):
+        return ("codex", "Codex", MATRIX["codex"], f"Codex ({MATRIX['codex']})", "openai cota")
+
+    # 2. LOCAL EXPLICITO (OLLAMA / 0 TOKENS)
+    if p.startswith("local:") or p.startswith("ollama:") or "use local" in p or "offline" in p:
+        return ("ollama", "Ollama", MATRIX["local"], MATRIX["local"], "0 tokens (local)")
+
+    # 3. TIER 1 - MÉTRICAS / SIZING / SNIPPETS RÁPIDOS (Gemini Flash)
+    if re.search(r'\b(tamanho|linhas|arquivos|espaço|espaco|disco|peso|metricas|estatisticas|regex|snippet|funcao|função|validar|typo|readme|document|coment|format|lint|traduz|organiz|listar|status|ajuda|resumo|explique|oq e|o que e|como faco|como faço)\b', p):
+        return ("agy", "Antigravity", MATRIX["fast"], MATRIX["fast"], "fast cloud (0 RAM)")
+
+    # 4. TIER 2 - SOLID / CLEAN ARCHITECTURE (Claude Sonnet 5.5)
+    if re.search(r'\b(solid|calisthenic|calistenic|clean code|clean arch|refator|padrao|padroes|design pattern|acoplamento)\b', p):
+        return ("agy", "Antigravity", MATRIX["solid"], MATRIX["solid"], "code quality guard")
+
+    # 5. TIER 2 - BIG CONTEXT / SPECS / REPOSITÓRIO INTEIRO (Gemini 4 Neon)
+    if re.search(r'\b(spec|specs|projeto inteiro|todo o projeto|analise de melhoria|arquitetura do sistema|todos os arquivos|leia o repo|estrutura do repo)\b', p):
+        return ("agy", "Antigravity", MATRIX["neon"], MATRIX["neon"], "1M+ context window")
+
+    # 6. TIER 3 - HARD DEBUGGING & CONCORRÊNCIA CRÍTICA (Claude Opus 5.5)
+    if re.search(r'\b(deadlock|race condition|concorrencia fina|vulnerabilidade critica|memory leak|heap dump|crash dump)\b', p):
+        return ("agy", "Antigravity", MATRIX["deep"], MATRIX["deep"], "deep reasoning")
+
+    # 7. ENGENHARIA PADRÃO IMEDIATA (evita chamada de rede para verbos comuns de dev)
+    if re.search(r'\b(crie|implemente|faca|faça|escreva|adicione|construa|rota|endpoint|classe|metodo|método|teste|unitario|unitário|controller|service|migration|banco|query|sql)\b', p):
+        return ("agy", "Antigravity", MATRIX["standard"], MATRIX["standard"], "standard engineering")
+
+    # ─── CAMADA 2: CLOUD SEMANTIC TRIAGE (Gemini Flash na Nuvem) ───────────────
+    cloud_decision = classify_with_cloud_flash(prompt)
+    if cloud_decision:
+        return cloud_decision
+
+    # ─── FALLBACK: ENGENHARIA PADRÃO ───────────────────────────────────────────
+    return ("agy", "Antigravity", MATRIX["standard"], MATRIX["standard"], "standard engineering")
+
+def execute_with_fallback(engine: str, model_id: str, prompt: str) -> tuple[str, str, str, str]:
+    if engine == "ollama":
+        try:
+            cmd = ["ollama", "run", model_id, prompt]
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+            output_lines = []
+            for line in proc.stdout:
+                sys.stdout.write(line)
+                sys.stdout.flush()
+                output_lines.append(line)
+            proc.wait()
+            out = "".join(output_lines)
+            if proc.returncode == 0 and out.strip():
+                return out, "Ollama", model_id, "0 tokens (local)"
+        except Exception:
+            pass
+        return execute_agy_with_fallback(MATRIX["fast"], prompt, "fallback cloud")
+
+    elif engine == "codex":
+        try:
+            cmd = ["codex", "-m", model_id, prompt]
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+            output_lines = []
+            for line in proc.stdout:
+                sys.stdout.write(line)
+                sys.stdout.flush()
+                output_lines.append(line)
+            proc.wait()
+            out = "".join(output_lines)
+            if proc.returncode == 0 and out.strip():
+                return out, "Codex", model_id, "openai cota"
+        except Exception:
+            pass
+        return execute_agy_with_fallback(MATRIX["deep"], prompt, "fallback agy opus")
+
+    else:
+        return execute_agy_with_fallback(model_id, prompt, "antigravity entitlement")
+
+def execute_agy_with_fallback(model_id: str, prompt: str, cost_desc: str) -> tuple[str, str, str, str]:
+    try:
+        cmd = ["agy", "--model", model_id, "--dangerously-skip-permissions", "-p", prompt]
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+        output_lines = []
+        for line in proc.stdout:
+            sys.stdout.write(line)
+            sys.stdout.flush()
+            output_lines.append(line)
+        proc.wait()
+        out = "".join(output_lines)
+        
+        if proc.returncode != 0 or "rate limit" in out.lower() or "quota exceeded" in out.lower() or "429" in out.lower():
+            raise RuntimeError(out)
+            
+        return out, "Antigravity", model_id, cost_desc
+    except Exception as e:
+        print(f"\n{YELLOW}⚠️ Antigravity indisponível. Tentando fallback para Ollama Local ({MATRIX['local']})...{RESET}")
+        try:
+            cmd = ["ollama", "run", MATRIX["local"], prompt]
+            proc = subprocess.run(cmd, text=True, capture_output=True, timeout=30)
+            if proc.returncode == 0 and proc.stdout.strip():
+                print(proc.stdout)
+                return proc.stdout, "Ollama (Fallback)", MATRIX["local"], "0 tokens (offline)"
+        except Exception:
+            pass
+        err_msg = f"Erro na execução: {e}"
+        print(err_msg)
+        return err_msg, "Erro", "None", "failed"
+
+def copy_to_clipboard(text: str) -> bool:
+    try:
+        proc = subprocess.run(["pbcopy"], input=text, text=True)
+        return proc.returncode == 0
+    except Exception:
+        return False
+
+def print_help():
+    print(f"\n{BOLD}Comandos Rápidos do ASK:{RESET}")
+    print(f"  {CYAN}/copy{RESET}         Copia a última resposta para o clipboard (pbcopy)")
+    print(f"  {CYAN}/clear{RESET}        Limpa o histórico de contexto da conversa atual")
+    print(f"  {CYAN}/model <nome>{RESET} Fixa temporariamente um modelo (ex: /model Claude Sonnet 5.5)")
+    print(f"  {CYAN}/auto{RESET}         Retorna para o roteamento automático")
+    print(f"  {CYAN}/help{RESET}         Exibe esta lista de comandos")
+    print(f"  {CYAN}exit{RESET} ou {CYAN}:q{RESET}    Encerra a sessão\n")
+
+def main():
+    kb = KeyBindings()
+
+    @kb.add("escape", "enter")
+    @kb.add("c-j")
+    def _insert_newline(event):
+        event.current_buffer.insert_text("\n")
+
+    @kb.add("enter")
+    def _accept_input(event):
+        buf = event.current_buffer
+        text = buf.text
+        if text.endswith("\\"):
+            buf.delete_before_cursor(count=1)
+            buf.insert_text("\n")
+        else:
+            buf.validate_and_handle()
+
+    session = PromptSession(
+        history=FileHistory(HISTORY_FILE),
+        reserve_space_for_menu=0,
+        key_bindings=kb,
+    )
+    for window in session.layout.find_all_windows():
+        window.dont_extend_height = to_filter(True)
+
+    current_agent = "Antigravity"
+    current_model = MATRIX["standard"]
+    current_cost = "standard engineering"
+    override_model = None
+    
+    conversation_turns = []
+    last_response = ""
+    
+    while True:
+        try:
+            width = get_terminal_width()
+            
+            if not conversation_turns:
+                print_banner()
+            
+            print(f"{GRAY}{'─' * width}{RESET}")
+
+            def bottom_toolbar():
+                current_width = get_terminal_width()
+                active_model = override_model if override_model else current_model
+                mode_label = "manual" if override_model else "auto"
+                footer_line = render_footer_line(mode_label, current_agent, active_model, current_cost)
+                return ANSI(f"{GRAY}{'─' * current_width}{RESET}\n{footer_line}")
+            
+            user_input = session.prompt(
+                ANSI(f"{CYAN}> {RESET}"),
+                multiline=True,
+                enable_history_search=True,
+                bottom_toolbar=bottom_toolbar,
+                style=PROMPT_STYLE,
+            )
+            
+            user_input = user_input.strip()
+            if not user_input:
+                sys.stdout.write("\033[2A\033[J")
+                sys.stdout.flush()
+                continue
+                
+            if user_input.lower() in ["exit", "sair", "quit", ":q"]:
+                print(f"\n{DIM}Sessão encerrada.{RESET}")
+                break
+
+            # Comandos de Barra
+            if user_input.lower() == "/help":
+                print_help()
+                continue
+
+            if user_input.lower() in ["/clear", "/reset"]:
+                conversation_turns.clear()
+                last_response = ""
+                print(f"\n{GREEN}✓ Histórico de contexto limpo com sucesso.{RESET}\n")
+                continue
+
+            if user_input.lower() in ["/copy", ":copy"]:
+                if last_response:
+                    if copy_to_clipboard(last_response):
+                        print(f"\n{GREEN}✓ Última resposta copiada para o clipboard (pbcopy)!{RESET}\n")
+                    else:
+                        print(f"\n{YELLOW}Falha ao acessar o pbcopy.{RESET}\n")
+                else:
+                    print(f"\n{YELLOW}Nenhuma resposta gerada ainda para copiar.{RESET}\n")
+                continue
+
+            if user_input.lower() == "/auto":
+                override_model = None
+                print(f"\n{GREEN}✓ Roteamento automático reativado.{RESET}\n")
+                continue
+
+            if user_input.lower().startswith("/model"):
+                parts = user_input.split(maxsplit=1)
+                if len(parts) > 1 and parts[1].strip():
+                    override_model = parts[1].strip()
+                    print(f"\n{GREEN}✓ Modelo fixado temporariamente para: {BOLD}{override_model}{RESET}\n")
+                else:
+                    print(f"\n{YELLOW}Uso: /model <nome do modelo> (ex: /model Gemini 4 Carbon){RESET}\n")
+                continue
+
+            # Classificação
+            if override_model:
+                engine = "agy"
+                init_agent = "Antigravity (Manual)"
+                model_id = override_model
+                init_model = override_model
+                init_cost = "manual override"
+            else:
+                print(f"{GRAY}{'─' * width}{RESET}")
+                print(render_footer_line("auto", current_agent, current_model, current_cost))
+                print()
+                spinner = ThinkingSpinner(f"[{CYAN}classificando modelo...{GRAY}]")
+                spinner.start()
+
+                classification_text = user_input
+                if len(user_input) <= 5 and conversation_turns:
+                    classification_text = conversation_turns[-1]["content"] + " " + user_input
+
+                engine, init_agent, model_id, init_model, init_cost = classify_prompt(classification_text)
+                spinner.stop()
+
+            # Atualiza rodapé
+            sys.stdout.write("\033[3A\r")
+            print(f"{GRAY}{'─' * width}{RESET}")
+            print(render_footer_line("manual" if override_model else "auto", init_agent, init_model, init_cost))
+            print()
+
+            prompt_with_context = ""
+            if conversation_turns:
+                prompt_with_context += "=== HISTÓRICO DA SESSÃO ===\n"
+                for turn in conversation_turns[-6:]:
+                    prompt_with_context += f"{turn['role']}: {turn['content']}\n"
+                prompt_with_context += "=== FIM DO HISTÓRICO ===\n\n"
+            
+            prompt_with_context += f"Usuário: {user_input}\n"
+
+            # Execução com streaming ativo
+            raw_output, current_agent, current_model, current_cost = execute_with_fallback(engine, model_id, prompt_with_context)
+            sanitized_output = process_observation(raw_output.strip())
+            last_response = sanitized_output
+            print()
+
+            conversation_turns.append({"role": "Usuário", "content": user_input})
+            conversation_turns.append({"role": "Assistente", "content": sanitized_output})
+            
+        except (KeyboardInterrupt, EOFError):
+            print(f"\n{DIM}Sessão encerrada.{RESET}")
+            break
+
+if __name__ == "__main__":
+    main()
